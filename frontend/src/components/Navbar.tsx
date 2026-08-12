@@ -52,14 +52,14 @@ export function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <Link
-              href="#"
+            <a
+              href="https://www.fiverr.com/ranasummar"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-accent text-foreground px-6 py-2.5 rounded-full text-sm font-bold hover:brightness-110 transition-all"
             >
               Hire Me
-            </Link>
+            </a>
           </nav>
 
           {/* Mobile Menu Toggle */}
@@ -100,15 +100,15 @@ export function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <Link
-                href="#"
+              <a
+                href="https://www.fiverr.com/ranasummar"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="bg-accent text-foreground px-10 py-4 rounded-full text-lg font-bold hover:brightness-110 transition-all mt-8 w-full text-center"
               >
                 Hire Me on Fiverr
-              </Link>
+              </a>
             </nav>
           </motion.div>
         )}

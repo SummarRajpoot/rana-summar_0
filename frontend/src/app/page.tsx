@@ -7,7 +7,7 @@ import Link from "next/link";
 const socialLinks = [
   {
     name: "GitHub",
-    href: "#",
+    href: "https://github.com/SummarRajpoot",
     isPrimary: false,
     isExternal: true,
     icon: (
@@ -18,7 +18,7 @@ const socialLinks = [
   },
   {
     name: "LinkedIn",
-    href: "#",
+    href: "https://linkedin.com/in/ranasummar",
     isPrimary: false,
     isExternal: true,
     icon: (
@@ -29,7 +29,7 @@ const socialLinks = [
   },
   {
     name: "WhatsApp",
-    href: "#",
+    href: "https://wa.me/",
     isPrimary: false,
     isExternal: true,
     icon: (
@@ -40,7 +40,7 @@ const socialLinks = [
   },
   {
     name: "Email",
-    href: "mailto:placeholder@email.com",
+    href: "mailto:ranasummar.dev@gmail.com",
     isPrimary: true,
     isExternal: false,
     icon: (
@@ -51,7 +51,7 @@ const socialLinks = [
   },
   {
     name: "Fiverr",
-    href: "#",
+    href: "https://www.fiverr.com/ranasummar",
     isPrimary: false,
     isExternal: true,
     icon: (
@@ -62,7 +62,7 @@ const socialLinks = [
   },
   {
     name: "Instagram",
-    href: "#",
+    href: "https://instagram.com/ranasummar",
     isPrimary: false,
     isExternal: true,
     icon: (
@@ -73,7 +73,7 @@ const socialLinks = [
   },
   {
     name: "X",
-    href: "#",
+    href: "https://x.com/ranasummar",
     isPrimary: false,
     isExternal: true,
     icon: (
@@ -84,7 +84,7 @@ const socialLinks = [
   },
   {
     name: "TikTok",
-    href: "#",
+    href: "https://tiktok.com/@ranasummar",
     isPrimary: false,
     isExternal: true,
     icon: (
@@ -95,7 +95,7 @@ const socialLinks = [
   },
   {
     name: "YouTube",
-    href: "#",
+    href: "https://youtube.com/@ranasummar",
     isPrimary: false,
     isExternal: true,
     icon: (
@@ -132,14 +132,14 @@ export default function Home() {
                 >
                   View Projects
                 </Link>
-                <Link
-                  href="#"
+                <a
+                  href="https://www.fiverr.com/ranasummar"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto border-2 border-foreground text-foreground px-8 py-3.5 rounded-full font-semibold hover:bg-foreground hover:text-background transition-colors flex items-center justify-center"
                 >
                   Hire Me on Fiverr
-                </Link>
+                </a>
               </div>
 
               <a
@@ -599,7 +599,7 @@ export default function Home() {
               {/* Social Icons / Links Row */}
               <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-16">
                 {socialLinks.map((social) => (
-                  <Link
+                  <a
                     key={social.name}
                     href={social.href}
                     target={social.isExternal ? "_blank" : undefined}
@@ -612,7 +612,7 @@ export default function Home() {
                   >
                     {social.icon}
                     <span>{social.name}</span>
-                  </Link>
+                  </a>
                 ))}
               </div>
             </FadeIn>
