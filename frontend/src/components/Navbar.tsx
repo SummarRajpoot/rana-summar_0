@@ -37,8 +37,37 @@ export function Navbar() {
       >
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <Link href="#home" className="flex shrink-0 items-center justify-center w-10 h-10 rounded-full border-2 border-accent bg-gray-200 shadow-sm hover:scale-105 transition-transform">
-            <span className="text-gray-600 font-heading font-bold tracking-tighter text-sm">RS</span>
+          <Link
+            href="#home"
+            className="relative group flex shrink-0 items-center justify-center w-10.5 h-10.5 rounded-full border-2 border-accent bg-surface-dark shadow-md hover:scale-105 transition-all duration-300"
+            aria-label="Rana Summar - Home"
+          >
+            {/* Background Code Icon Watermark */}
+            <svg
+              className="absolute w-6.5 h-6.5 text-accent/25 group-hover:text-accent/40 group-hover:rotate-6 transition-all duration-300 pointer-events-none select-none"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.75}
+                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+              />
+            </svg>
+
+            {/* Initials */}
+            <span className="font-heading font-extrabold tracking-tight text-xs text-accent group-hover:text-white transition-colors z-10 select-none">
+              RS
+            </span>
+
+            {/* Corner Terminal Accent Badge */}
+            <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-accent text-surface-dark border border-background shadow-sm flex items-center justify-center z-20 group-hover:scale-110 transition-transform">
+              <svg className="w-2 h-2 text-surface-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M8 9l3 3-3 3m5 0h3" />
+              </svg>
+            </span>
           </Link>
 
           {/* Desktop Nav */}
