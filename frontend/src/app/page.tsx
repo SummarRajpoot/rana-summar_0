@@ -141,6 +141,31 @@ export default function Home() {
                   Hire Me on Fiverr
                 </Link>
               </div>
+
+              <a
+                href="/cv/rana-summar-cv.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-foreground group transition-colors"
+              >
+                <svg
+                  className="w-4 h-4 text-foreground/80 group-hover:text-accent transition-colors shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                <span className="border-b-2 border-transparent group-hover:border-accent pb-0.5 transition-colors">
+                  Download CV
+                </span>
+              </a>
             </div>
 
             {/* Profile Photo */}
