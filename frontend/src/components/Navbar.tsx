@@ -82,7 +82,7 @@ export function Navbar() {
               </Link>
             ))}
             <a
-              href="https://www.fiverr.com/ranasummar"
+              href="https://www.fiverr.com/rana_summar"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-accent text-foreground px-6 py-2.5 rounded-full text-sm font-bold hover:brightness-110 transition-all"
@@ -130,7 +130,7 @@ export function Navbar() {
                 </Link>
               ))}
               <a
-                href="https://www.fiverr.com/ranasummar"
+                href="https://www.fiverr.com/rana_summar"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
