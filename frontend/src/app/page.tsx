@@ -1,6 +1,7 @@
 import { FadeIn } from "@/components/FadeIn";
 import { Navbar } from "@/components/Navbar";
 import { SkillsSection } from "@/components/SkillsSection";
+import { ContactSection } from "@/components/ContactSection";
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
@@ -574,42 +575,8 @@ export default function Home() {
         </section>
 
 
-        {/* ── 6. CONTACT & SOCIALS ────────────────────────────── */}
-        <section id="contact" className="py-24 px-6 bg-background border-t border-foreground/5">
-          <div className="max-w-4xl mx-auto text-center">
-            <FadeIn>
-              <span className="text-accent font-bold tracking-wider uppercase text-sm mb-3 block">
-                Get In Touch
-              </span>
-              <h2 className="text-3xl md:text-5xl font-bold font-heading text-foreground mb-6">
-                Let&apos;s Work Together
-              </h2>
-              <p className="text-foreground/70 font-body text-lg mb-12 leading-relaxed max-w-2xl mx-auto">
-                Whether you need an AI agent, a full-stack application, or want to collaborate on something new — I&apos;d love to hear from you.
-              </p>
-
-              {/* Social Icons / Links Row */}
-              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-16">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    target={social.isExternal ? "_blank" : undefined}
-                    rel={social.isExternal ? "noopener noreferrer" : undefined}
-                    className={`inline-flex items-center justify-center gap-2.5 rounded-full px-5 py-2.5 text-sm sm:text-base font-semibold transition-all duration-200 shadow-sm ${
-                      social.isPrimary
-                        ? "bg-accent text-foreground hover:brightness-110"
-                        : "border border-foreground/20 bg-background text-foreground hover:border-accent/40 hover:bg-accent/10 hover:text-accent"
-                    }`}
-                  >
-                    {social.icon}
-                    <span>{social.name}</span>
-                  </a>
-                ))}
-              </div>
-            </FadeIn>
-          </div>
-        </section>
+        {/* ── 6. CONTACT ──────────────────────────────────────── */}
+        <ContactSection />
 
 
         {/* ── 8. FOOTER ────────────────────────────────────────── */}
