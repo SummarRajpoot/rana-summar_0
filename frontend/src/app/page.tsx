@@ -20,6 +20,12 @@ const FiverrIcon = ({ className = "w-5 h-5 shrink-0" }: { className?: string }) 
   </svg>
 );
 
+const UpworkIcon = ({ className = "w-5 h-5 shrink-0" }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.396-2.007 1.258-3.328 2.838-3.328 1.408 0 2.502 1.134 2.502 2.766 0 1.632-1.094 2.907-2.502 2.907zM18.561 5.5c-3.03 0-4.838 2.05-5.66 4.353-1.085-1.632-1.74-3.79-2.124-5.853H8.318v7.414c0 1.846-1.127 3.328-2.838 3.328-1.71 0-2.838-1.482-2.838-3.328V4h-2.64v7.414c0 3.308 2.274 5.966 5.478 5.966 3.204 0 5.478-2.658 5.478-5.966v-1.196c.456 1.482 1.232 3.013 2.378 4.298l-2.004 9.484h2.75l1.458-6.904c.91.564 1.944.876 3.074.876 3.03 0 5.478-2.482 5.478-6.136 0-3.654-2.448-6.136-5.478-6.136z"/>
+  </svg>
+);
+
 const TikTokIcon = ({ className = "w-5 h-5 shrink-0" }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
     <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
@@ -70,6 +76,13 @@ const socialLinks = [
     icon: <FiverrIcon className="w-5 h-5 shrink-0" />,
   },
   {
+    name: "Upwork",
+    href: "https://www.upwork.com/freelancers/ranasummar",
+    isPrimary: false,
+    isExternal: true,
+    icon: <UpworkIcon className="w-5 h-5 shrink-0" />,
+  },
+  {
     name: "X (Twitter)",
     href: "https://x.com/RanaSummar4",
     isPrimary: false,
@@ -118,10 +131,10 @@ export default function Home() {
               <p className="text-lg md:text-xl text-foreground/80 font-body mb-8 max-w-2xl leading-relaxed">
                 Final-year Software Engineering student. I build AI agents and scalable full-stack applications with Next.js, FastAPI, and LangChain.
               </p>
-              <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row flex-wrap items-center gap-3 w-full sm:w-auto">
                 <Link
                   href="#projects"
-                  className="w-full sm:w-auto bg-accent text-foreground px-8 py-3.5 rounded-full font-semibold hover:brightness-110 transition-all flex items-center justify-center"
+                  className="w-full sm:w-auto bg-accent text-foreground px-7 py-3 rounded-full font-semibold hover:brightness-110 transition-all flex items-center justify-center text-sm sm:text-base"
                 >
                   View Projects
                 </Link>
@@ -129,9 +142,19 @@ export default function Home() {
                   href="https://www.fiverr.com/rana_summar"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto border-2 border-foreground text-foreground px-8 py-3.5 rounded-full font-semibold hover:bg-foreground hover:text-background transition-colors flex items-center justify-center"
+                  className="w-full sm:w-auto border-2 border-foreground text-foreground px-6 py-3 rounded-full font-semibold hover:bg-foreground hover:text-background transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
                 >
-                  Hire Me on Fiverr
+                  <FiverrIcon className="w-4 h-4 shrink-0" />
+                  <span>Hire Me on Fiverr</span>
+                </a>
+                <a
+                  href="https://www.upwork.com/freelancers/ranasummar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto border-2 border-foreground text-foreground px-6 py-3 rounded-full font-semibold hover:bg-foreground hover:text-background transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
+                >
+                  <UpworkIcon className="w-4 h-4 shrink-0" />
+                  <span>Hire Me on Upwork</span>
                 </a>
               </div>
 

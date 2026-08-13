@@ -85,9 +85,17 @@ export function Navbar() {
               href="https://www.fiverr.com/rana_summar"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-accent text-foreground px-6 py-2.5 rounded-full text-sm font-bold hover:brightness-110 transition-all"
+              className="bg-accent text-foreground px-4.5 py-2 rounded-full text-xs sm:text-sm font-bold hover:brightness-110 transition-all"
             >
-              Hire Me
+              Fiverr
+            </a>
+            <a
+              href="https://www.upwork.com/freelancers/ranasummar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-2 border-accent text-foreground hover:bg-accent hover:text-foreground px-4.5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all"
+            >
+              Upwork
             </a>
           </nav>
 
@@ -118,7 +126,7 @@ export function Navbar() {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 bg-surface-dark pt-24 pb-8 px-6 md:hidden overflow-y-auto"
           >
-            <nav className="flex flex-col items-center gap-8 mt-12">
+            <nav className="flex flex-col items-center gap-6 mt-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -134,9 +142,18 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="bg-accent text-foreground px-10 py-4 rounded-full text-lg font-bold hover:brightness-110 transition-all mt-8 w-full text-center"
+                className="bg-accent text-foreground px-8 py-3.5 rounded-full text-base font-bold hover:brightness-110 transition-all mt-4 w-full text-center"
               >
                 Hire Me on Fiverr
+              </a>
+              <a
+                href="https://www.upwork.com/freelancers/ranasummar"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="border-2 border-accent text-white px-8 py-3.5 rounded-full text-base font-bold hover:bg-accent hover:text-foreground transition-all w-full text-center"
+              >
+                Hire Me on Upwork
               </a>
             </nav>
           </motion.div>
