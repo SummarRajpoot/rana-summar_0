@@ -1,0 +1,13 @@
+# FastAPI Cloud Exclude Rules
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.git/
+.gitignore
+Dockerfile
