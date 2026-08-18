@@ -338,22 +338,22 @@ export default function Home() {
 
                     {/* Image Gallery */}
                     <div className="grid grid-cols-2 gap-4 mt-6">
-                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5">
+                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/60">
                         <Image
                           src="/images/saylani-class-1.jpg.jpg"
                           alt="Rana Summar at Saylani Agentic AI class — Batch 1"
                           fill
                           sizes="(max-width: 768px) 50vw, 350px"
-                          className="object-cover hover:scale-105 transition-transform duration-300"
+                          className="object-contain hover:scale-105 transition-transform duration-300"
                         />
                       </div>
-                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5">
+                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/60">
                         <Image
                           src="/images/saylani-class-2.jpg.jpg"
                           alt="Rana Summar attending Saylani IT Training Programme session"
                           fill
                           sizes="(max-width: 768px) 50vw, 350px"
-                          className="object-cover hover:scale-105 transition-transform duration-300"
+                          className="object-contain hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                     </div>
@@ -379,22 +379,22 @@ export default function Home() {
                     
                     {/* Image Gallery */}
                     <div className="grid grid-cols-2 gap-4 mt-6">
-                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5">
+                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/60">
                         <Image
                           src="/images/experience-1.jpeg"
                           alt="Rana Summar at Chase Value Store"
                           fill
                           sizes="(max-width: 768px) 50vw, 350px"
-                          className="object-cover hover:scale-105 transition-transform duration-300"
+                          className="object-contain hover:scale-105 transition-transform duration-300"
                         />
                       </div>
-                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5">
+                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/60">
                         <Image
                           src="/images/experience-2.jpeg"
                           alt="Rana Summar receiving recognition at Chase Value"
                           fill
                           sizes="(max-width: 768px) 50vw, 350px"
-                          className="object-cover hover:scale-105 transition-transform duration-300"
+                          className="object-contain hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                     </div>
