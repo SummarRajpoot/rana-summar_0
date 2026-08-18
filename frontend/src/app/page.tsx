@@ -336,26 +336,26 @@ export default function Home() {
                     <p className="text-white/50 text-sm font-body mb-6">IT Training · Pakistan</p>
                     <p className="text-white/60 text-sm font-body mb-6">Completed 7-month Agentic AI training (Nov 2025 – May 2026) as a student at Saylani IT Training Programme.</p>
 
-                    {/* Image Gallery */}
+                    {/* Image Gallery — natural aspect ratio, no cropping */}
                     <div className="grid grid-cols-2 gap-4 mt-6">
-                      {/* Podium image: cover + top-crop so the person stays fully visible */}
-                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/60">
+                      <div className="rounded-xl border border-white/10 bg-black/60 overflow-hidden flex items-center justify-center">
                         <Image
                           src="/images/saylani-class-1.jpg.jpg"
                           alt="Rana Summar at Saylani Agentic AI class — Batch 1"
-                          fill
+                          width={0}
+                          height={0}
                           sizes="(max-width: 768px) 50vw, 350px"
-                          className="object-cover hover:scale-105 transition-transform duration-300"
-                          style={{ objectPosition: "top center" }}
+                          className="w-full h-auto max-h-[360px] object-contain hover:scale-105 transition-transform duration-300"
                         />
                       </div>
-                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/60">
+                      <div className="rounded-xl border border-white/10 bg-black/60 overflow-hidden flex items-center justify-center">
                         <Image
                           src="/images/saylani-class-2.jpg.jpg"
                           alt="Rana Summar attending Saylani IT Training Programme session"
-                          fill
+                          width={0}
+                          height={0}
                           sizes="(max-width: 768px) 50vw, 350px"
-                          className="object-cover hover:scale-105 transition-transform duration-300"
+                          className="w-full h-auto max-h-[360px] object-contain hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                     </div>
@@ -379,24 +379,26 @@ export default function Home() {
                     <p className="text-white/80 font-body mb-1">Chase Value, Faisalabad</p>
                     <p className="text-white/50 text-sm font-body mb-6">Retail Management · Pakistan</p>
                     
-                    {/* Image Gallery */}
+                    {/* Image Gallery — natural aspect ratio, no cropping */}
                     <div className="grid grid-cols-2 gap-4 mt-6">
-                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/60">
+                      <div className="rounded-xl border border-white/10 bg-black/60 overflow-hidden flex items-center justify-center">
                         <Image
                           src="/images/experience-1.jpeg"
                           alt="Rana Summar at Chase Value Store"
-                          fill
+                          width={0}
+                          height={0}
                           sizes="(max-width: 768px) 50vw, 350px"
-                          className="object-cover hover:scale-105 transition-transform duration-300"
+                          className="w-full h-auto max-h-[360px] object-contain hover:scale-105 transition-transform duration-300"
                         />
                       </div>
-                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/60">
+                      <div className="rounded-xl border border-white/10 bg-black/60 overflow-hidden flex items-center justify-center">
                         <Image
                           src="/images/experience-2.jpeg"
                           alt="Rana Summar receiving recognition at Chase Value"
-                          fill
+                          width={0}
+                          height={0}
                           sizes="(max-width: 768px) 50vw, 350px"
-                          className="object-cover hover:scale-105 transition-transform duration-300"
+                          className="w-full h-auto max-h-[360px] object-contain hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                     </div>
