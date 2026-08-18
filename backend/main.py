@@ -1,5 +1,6 @@
 import os
 import smtplib
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -10,24 +11,36 @@ from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from database import get_testimonials_collection
+from database import close_client, get_testimonials_collection
 
 load_dotenv()
 
-app = FastAPI(title="Portfolio API")
 
-# ── CORS ──────────────────────────────────────────────────────────────────────
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # App startup
+    yield
+    # App shutdown: close MongoDB client connection
+    close_client()
+
+
+app = FastAPI(title="Portfolio API", lifespan=lifespan)
+
+# ── CORS Configuration ────────────────────────────────────────────────────────
 default_origins = [
     "https://rana-summar-0.vercel.app",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
-cors_env = os.getenv("CORS_ORIGINS", "")
-if cors_env.strip():
-    env_origins = [o.strip() for o in cors_env.split(",") if o.strip()]
-    allowed_origins = list(set(default_origins + env_origins))
-else:
-    allowed_origins = default_origins
+
+allowed_origins = list(default_origins)
+for env_var in ["FRONTEND_URL", "CORS_ORIGINS", "ALLOWED_ORIGINS"]:
+    val = os.getenv(env_var, "")
+    if val.strip():
+        for origin in val.split(","):
+            origin_clean = origin.strip().rstrip("/")
+            if origin_clean and origin_clean not in allowed_origins:
+                allowed_origins.append(origin_clean)
 
 app.add_middleware(
     CORSMiddleware,
@@ -176,9 +189,21 @@ async def submit_contact(payload: ContactCreate):
             server.login(gmail_address, gmail_app_password)
             server.send_message(msg)
 
-        return {"success": True}
+        return {"success": True, "message": "Message sent successfully."}
+    except smtplib.SMTPAuthenticationError:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="SMTP Authentication failed. Please verify GMAIL_ADDRESS and GMAIL_APP_PASSWORD (Gmail App Password required).",
+        )
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to send email: {str(e)}",
         )
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

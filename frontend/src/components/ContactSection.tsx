@@ -118,7 +118,7 @@ export function ContactSection() {
                     required
                     value={formData.first_name}
                     onChange={handleChange}
-                    placeholder="Jane"
+                    placeholder="Rana"
                     className="w-full bg-[#F5F5F3] border border-foreground/20 rounded-xl px-4 py-3 text-foreground placeholder:text-foreground/40 focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none transition-colors font-body text-sm"
                   />
                 </div>
@@ -136,7 +136,7 @@ export function ContactSection() {
                     required
                     value={formData.last_name}
                     onChange={handleChange}
-                    placeholder="Doe"
+                    placeholder="Summar"
                     className="w-full bg-[#F5F5F3] border border-foreground/20 rounded-xl px-4 py-3 text-foreground placeholder:text-foreground/40 focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none transition-colors font-body text-sm"
                   />
                 </div>
@@ -157,7 +157,7 @@ export function ContactSection() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="jane@example.com"
+                  placeholder="ranasummar@example.com"
                   className="w-full bg-[#F5F5F3] border border-foreground/20 rounded-xl px-4 py-3 text-foreground placeholder:text-foreground/40 focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none transition-colors font-body text-sm"
                 />
               </div>

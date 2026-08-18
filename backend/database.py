@@ -59,3 +59,10 @@ def get_clients_collection():
 
 def get_feedback_collection():
     return get_collection("feedback")
+
+
+def close_client():
+    global _client
+    if _client is not None:
+        _client.close()
+        _client = None

@@ -1,8 +1,6 @@
 fastapi
-uvicorn
+uvicorn[standard]
 python-dotenv
 pydantic
 motor
 certifi
-langchain
-langchain-groq
