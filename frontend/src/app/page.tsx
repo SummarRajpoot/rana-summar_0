@@ -316,7 +316,52 @@ export default function Home() {
             <div className="relative max-w-3xl mx-auto">
               <div className="absolute left-5 top-0 bottom-0 w-px bg-foreground/10 hidden sm:block" />
               <div className="space-y-10">
+                {/* Experience 1: Saylani Agentic AI Training */}
                 <FadeIn delay={0.1} className="flex flex-col sm:flex-row gap-6">
+                  <div className="shrink-0 flex items-start pt-1">
+                    <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center shadow-md z-10">
+                      {/* Graduation cap icon — education/training role */}
+                      <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422A12.083 12.083 0 0121 12c0 6.075-4.925 11-11 11S1 18.075 1 12c0-1.486.296-2.903.84-4.196L12 14z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="flex-1 bg-surface-dark rounded-2xl p-7 border border-foreground/10">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+                      <h3 className="text-xl font-bold font-heading text-white">Student — Agentic AI (Batch-1)</h3>
+                      <span className="text-accent text-sm font-semibold shrink-0">Training</span>
+                    </div>
+                    <p className="text-white/80 font-body mb-1">Saylani IT Training Programme (Saylani Welfare International Trust)</p>
+                    <p className="text-white/50 text-sm font-body mb-6">IT Training · Pakistan</p>
+                    <p className="text-white/60 text-sm font-body mb-6">Completed 7-month Agentic AI training (Nov 2025 – May 2026) as a student at Saylani IT Training Programme.</p>
+
+                    {/* Image Gallery */}
+                    <div className="grid grid-cols-2 gap-4 mt-6">
+                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5">
+                        <Image
+                          src="/images/saylani-class-1.jpg.jpg"
+                          alt="Rana Summar at Saylani Agentic AI class — Batch 1"
+                          fill
+                          sizes="(max-width: 768px) 50vw, 350px"
+                          className="object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/5">
+                        <Image
+                          src="/images/saylani-class-2.jpg.jpg"
+                          alt="Rana Summar attending Saylani IT Training Programme session"
+                          fill
+                          sizes="(max-width: 768px) 50vw, 350px"
+                          className="object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </FadeIn>
+
+                {/* Experience 2: Assistant Supervisor — Retail */}
+                <FadeIn delay={0.2} className="flex flex-col sm:flex-row gap-6">
                   <div className="shrink-0 flex items-start pt-1">
                     <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center shadow-md z-10">
                       <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -580,6 +625,39 @@ export default function Home() {
                   <div className="mt-auto">
                     <a
                       href="/certificates/networking_devices_and_initial_configuration.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 text-accent px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-accent hover:text-foreground transition-all"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      View / Download
+                    </a>
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Certificate 5: Saylani Agentic AI (Batch-1) — PDF with iframe preview */}
+              <FadeIn delay={0.5} className="bg-surface-dark rounded-2xl overflow-hidden border border-foreground/10 hover:border-accent/50 transition-colors flex flex-col">
+                <div className="relative w-full h-56 overflow-hidden bg-white/5">
+                  <iframe
+                    src="/certificates/saylani-agentic-ai.png.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+                    className="absolute w-[130%] h-[130%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none select-none"
+                    title="Saylani Agentic AI Batch-1 Certificate Preview"
+                  />
+                  <div className="absolute inset-0 bg-transparent z-10" />
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-lg font-bold font-heading text-white mb-1">Agentic AI (Batch-1)</h3>
+                  <p className="text-accent text-sm font-semibold mb-1">Saylani IT Training Programme (Saylani Welfare International Trust)</p>
+                  <p className="text-white/50 text-sm font-body mb-4">May 2026</p>
+                  <p className="text-white/60 text-sm font-body leading-relaxed mb-4">
+                    Successfully completed the Agentic AI (Batch-1) training course, 7 months duration (Nov 2025 – May 2026), as a student under the Education Department of Saylani Welfare International Trust.
+                  </p>
+                  <div className="mt-auto">
+                    <a
+                      href="/certificates/saylani-agentic-ai.png.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 text-accent px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-accent hover:text-foreground transition-all"
