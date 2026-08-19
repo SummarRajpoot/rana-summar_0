@@ -445,10 +445,19 @@ export default function Home() {
               </h2>
             </FadeIn>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <FadeIn delay={0.1} className="bg-white/5 rounded-2xl p-8 border border-white/10 hover:border-accent/50 transition-colors flex flex-col">
+              <FadeIn delay={0.1} className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-accent/50 transition-colors flex flex-col">
+                <div className="relative w-full h-48 bg-white/5">
+                  <Image
+                    src="/images/jobscout.png"
+                    alt="JobScout AI — project screenshot"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-8">
                 <h3 className="text-2xl font-bold font-heading text-white mb-3">JobScout AI</h3>
                 <p className="text-white/80 font-body mb-6 flex-grow">
-                  Autonomous AI agent for CV parsing, real job matching, aur dashboard presentation. Built for SMIT (Saylani) Hackathon.
+                  Autonomous AI agent for CV parsing, real-time job matching, and dashboard presentation. Built as a 6th semester project under Sir Hassan Tariq.
                 </p>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {["Next.js 14", "FastAPI", "LangChain/LangGraph", "Groq (llama-3.3-70b-versatile)", "Gemini", "Tavily", "HF Spaces", "Vercel"].map(tag => (
@@ -456,8 +465,10 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="flex gap-4">
-                  <Link href="#" className="text-sm font-semibold text-accent hover:text-white transition-colors">View Live Demo &rarr;</Link>
-                  <Link href="#" className="text-sm font-semibold text-white/60 hover:text-white transition-colors">GitHub &rarr;</Link>
+                  <Link href="https://jobacort-ai.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-accent hover:text-white transition-colors">View Live Demo &rarr;</Link>
+                  <Link href="https://github.com/SummarRajpoot/UAF-6th-Project-Frontend" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white/60 hover:text-white transition-colors">Frontend &rarr;</Link>
+                  <Link href="https://github.com/SummarRajpoot/UAF-6th-Project-Backend" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white/60 hover:text-white transition-colors">Backend &rarr;</Link>
+                </div>
                 </div>
               </FadeIn>
 
