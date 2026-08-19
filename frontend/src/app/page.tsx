@@ -2,6 +2,7 @@ import { FadeIn } from "@/components/FadeIn";
 import { Navbar } from "@/components/Navbar";
 import { SkillsSection } from "@/components/SkillsSection";
 import { ContactSection } from "@/components/ContactSection";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
@@ -679,6 +680,8 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── TESTIMONIALS ─────────────────────────────────────── */}
+        <TestimonialsSection />
 
         {/* ── 6. CONTACT ──────────────────────────────────────── */}
         <ContactSection />

@@ -2,268 +2,185 @@
 
 import { useState, useEffect } from "react";
 import { FadeIn } from "@/components/FadeIn";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface Testimonial {
   id: string;
   name: string;
   message: string;
   created_at: string;
+  role?: string;
+  company?: string;
+  rating?: number;
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+function StarRating({ rating }: { rating: number }) {
+  const clamped = Math.min(5, Math.max(0, Math.round(rating)));
+  return (
+    <div className="flex gap-0.5" aria-label={`${clamped} out of 5 stars`}>
+      {Array.from({ length: 5 }, (_, i) => (
+        <svg
+          key={i}
+          className={`w-4 h-4 ${i < clamped ? "text-accent" : "text-white/20"}`}
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+        >
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      ))}
+    </div>
+  );
+}
 
-function describeFetchError(err: unknown, url: string): string {
-  if (err instanceof DOMException && err.name === "AbortError") {
-    return "Connection timed out — the backend may be slow or not running on port 8000.";
-  }
-  if (err instanceof TypeError) {
-    // Browser throws TypeError("Failed to fetch") for connection refused, CORS blocks, DNS failures, etc.
-    return `Network error reaching ${url}. Is the FastAPI backend running? (cd backend && python -m uvicorn main:app --reload)`;
-  }
-  if (err instanceof Error) {
-    return err.message;
-  }
-  return "Failed to connect to backend";
+function formatDate(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("en-PK", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 }
 
 export function TestimonialsSection() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: "", message: "" });
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchTestimonials();
+    let cancelled = false;
+
+    async function loadTestimonials() {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+      try {
+        const response = await fetch(`${baseUrl}/testimonials`);
+
+        if (!response.ok) {
+          throw new Error("Could not load testimonials.");
+        }
+
+        const data = await response.json();
+        if (!cancelled && Array.isArray(data)) {
+          setTestimonials(data);
+        }
+      } catch {
+        if (!cancelled) {
+          setFetchError("Testimonials are temporarily unavailable.");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadTestimonials();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  async function fetchTestimonials() {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
-
-    try {
-      setError(null);
-      console.log("[Testimonials] Fetching from:", `${API_BASE}/testimonials`);
-      const res = await fetch(`${API_BASE}/testimonials`, {
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
-      
-      console.log("[Testimonials] GET response status:", res.status, res.statusText);
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-      }
-      const data = await res.json();
-      
-      if (Array.isArray(data)) {
-        setTestimonials(data);
-      } else {
-        throw new Error("Invalid response format: expected array");
-      }
-    } catch (err: unknown) {
-      const url = `${API_BASE}/testimonials`;
-      console.error("[Testimonials] fetchTestimonials failed:", {
-        url,
-        apiBase: API_BASE,
-        envApiUrl: process.env.NEXT_PUBLIC_API_URL ?? "(not set — using default)",
-        name: err instanceof Error ? err.name : typeof err,
-        message: err instanceof Error ? err.message : String(err),
-        cause: err instanceof Error ? err.cause : undefined,
-        stack: err instanceof Error ? err.stack : undefined,
-      });
-      setError(`Could not load comments (${describeFetchError(err, url)}).`);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    
-    const nameTrimmed = form.name.trim();
-    const messageTrimmed = form.message.trim();
-    
-    if (!nameTrimmed || !messageTrimmed) {
-      setError("Name and message cannot be empty.");
-      return;
-    }
-    
-    if (nameTrimmed.length > 80) {
-      setError("Name must be under 80 characters.");
-      return;
-    }
-    
-    if (messageTrimmed.length > 500) {
-      setError("Message must be under 500 characters.");
-      return;
-    }
-
-    setSubmitting(true);
-    setError(null);
-    
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s — Atlas free-tier cold starts can be slow
-
-    try {
-      console.log("[Testimonials] POSTing to:", `${API_BASE}/testimonials`);
-      const res = await fetch(`${API_BASE}/testimonials`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: nameTrimmed, message: messageTrimmed }),
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
-      
-      console.log("[Testimonials] POST response status:", res.status);
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.detail || "Failed to submit comment");
-      }
-      
-      const newTestimonial = await res.json();
-      setTestimonials((prev) => [newTestimonial, ...prev]);
-      setForm({ name: "", message: "" });
-      setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 3000);
-    } catch (err: any) {
-      console.error("[Testimonials] POST error:", err);
-      if (err.name === "AbortError") {
-        setError("Submission timed out. Please try again.");
-      } else {
-        setError(err.message || "Could not submit your comment. Please try again.");
-      }
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
   return (
-    <div className="max-w-6xl mx-auto">
-      <FadeIn>
-        <span className="text-accent font-bold tracking-wider uppercase text-sm mb-3 block text-center">
-          What People Say
-        </span>
-        <h2 className="text-3xl md:text-5xl font-bold font-heading text-foreground mb-4 text-center">
-          Testimonials
-        </h2>
-        <p className="text-foreground/60 font-body text-center mb-16 max-w-xl mx-auto">
-          Real comments from visitors and collaborators — stored permanently in the database.
-        </p>
-      </FadeIn>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Left: Comment List */}
-        <div className="space-y-6">
-          {loading && (
-            <div className="flex items-center justify-center py-16">
-              <div className="w-8 h-8 rounded-full border-2 border-accent border-t-transparent animate-spin" />
-            </div>
-          )}
-
-          {!loading && testimonials.length === 0 && !error && (
-            <div className="text-center py-16 text-foreground/40 font-body">
-              No comments yet — be the first to leave one!
-            </div>
-          )}
-
-          {error && (
-            <div className="text-center py-8 text-red-400 font-body text-sm">{error}</div>
-          )}
-
-          <AnimatePresence>
-            {testimonials.map((t) => (
-              <motion.div
-                key={t.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="bg-surface-dark rounded-2xl p-6 border border-foreground/10"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-9 h-9 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center shrink-0">
-                    <span className="text-accent font-bold text-sm font-heading">
-                      {t.name.charAt(0).toUpperCase()}
-                    </span>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm">{t.name}</p>
-                    <p className="text-white/40 text-xs font-body">
-                      {new Date(t.created_at).toLocaleDateString("en-PK", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </p>
-                  </div>
-                </div>
-                <p className="text-white/75 font-body text-sm leading-relaxed">{t.message}</p>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-
-        {/* Right: Submit Form */}
-        <FadeIn delay={0.2}>
-          <div className="bg-surface-dark rounded-2xl p-8 border border-foreground/10 sticky top-28">
-            <h3 className="text-xl font-bold font-heading text-white mb-6">Leave a Comment</h3>
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label className="block text-white/60 text-sm font-body mb-2" htmlFor="testimonial-name">
-                  Your Name
-                </label>
-                <input
-                  id="testimonial-name"
-                  type="text"
-                  required
-                  maxLength={80}
-                  value={form.name}
-                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  placeholder="e.g. Ahmed Khan"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 font-body focus:outline-none focus:border-accent transition-colors"
-                />
-              </div>
-              <div>
-                <label className="block text-white/60 text-sm font-body mb-2" htmlFor="testimonial-message">
-                  Your Message
-                </label>
-                <textarea
-                  id="testimonial-message"
-                  required
-                  maxLength={500}
-                  rows={4}
-                  value={form.message}
-                  onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                  placeholder="Share your experience or comment..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 font-body focus:outline-none focus:border-accent transition-colors resize-none"
-                />
-                <p className="text-white/30 text-xs font-body mt-1 text-right">{form.message.length}/500</p>
-              </div>
-
-              {error && <p className="text-red-400 text-sm font-body">{error}</p>}
-
-              <button
-                type="submit"
-                disabled={submitting || !form.name.trim() || !form.message.trim()}
-                className="w-full bg-accent text-foreground py-3.5 rounded-xl font-bold hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {submitting ? (
-                  <>
-                    <div className="w-4 h-4 rounded-full border-2 border-foreground border-t-transparent animate-spin" />
-                    Submitting...
-                  </>
-                ) : submitted ? (
-                  "✓ Comment Posted!"
-                ) : (
-                  "Post Comment"
-                )}
-              </button>
-            </form>
-          </div>
+    <section id="testimonials" className="py-24 px-6 bg-background border-t border-foreground/5">
+      <div className="max-w-6xl mx-auto">
+        <FadeIn>
+          <span className="text-accent font-bold tracking-wider uppercase text-sm mb-3 block text-center">
+            What People Say
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold font-heading text-foreground mb-4 text-center">
+            Testimonials
+          </h2>
+          <p className="text-foreground/70 font-body text-center mb-16 max-w-xl mx-auto leading-relaxed">
+            Feedback from clients and collaborators I&apos;ve worked with.
+          </p>
         </FadeIn>
+
+        {loading && (
+          <div className="flex items-center justify-center py-16">
+            <svg
+              className="animate-spin w-8 h-8 text-accent"
+              fill="none"
+              viewBox="0 0 24 24"
+              aria-label="Loading testimonials"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+          </div>
+        )}
+
+        {!loading && fetchError && (
+          <div className="text-center py-12">
+            <p className="text-foreground/50 font-body text-sm">{fetchError}</p>
+          </div>
+        )}
+
+        {!loading && !fetchError && testimonials.length === 0 && (
+          <div className="text-center py-16 bg-surface-dark/5 border border-foreground/10 rounded-2xl">
+            <p className="text-foreground/50 font-body">
+              No testimonials yet — check back soon.
+            </p>
+          </div>
+        )}
+
+        {!loading && !fetchError && testimonials.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((t, index) => {
+              const subtitle = [t.role, t.company].filter(Boolean).join(" · ");
+              return (
+                <motion.div
+                  key={t.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.35, delay: index * 0.05 }}
+                  className="bg-surface-dark rounded-2xl p-7 border border-foreground/10 flex flex-col h-full"
+                >
+                  {typeof t.rating === "number" && (
+                    <div className="mb-4">
+                      <StarRating rating={t.rating} />
+                    </div>
+                  )}
+
+                  <blockquote className="text-white/75 font-body text-sm leading-relaxed flex-grow mb-6">
+                    &ldquo;{t.message}&rdquo;
+                  </blockquote>
+
+                  <div className="flex items-center gap-3 pt-4 border-t border-white/10">
+                    <div className="w-10 h-10 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center shrink-0">
+                      <span className="text-accent font-bold text-sm font-heading">
+                        {t.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-white font-semibold text-sm truncate">{t.name}</p>
+                      {subtitle && (
+                        <p className="text-white/50 text-xs font-body truncate">{subtitle}</p>
+                      )}
+                      {t.created_at && (
+                        <p className="text-white/40 text-xs font-body">{formatDate(t.created_at)}</p>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 }
