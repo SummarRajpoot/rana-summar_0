@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://ranasummar.vercel.app/sitemap.xml
