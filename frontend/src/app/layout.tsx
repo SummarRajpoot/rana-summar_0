@@ -26,6 +26,8 @@ export const metadata: Metadata = {
   description: seoDescription,
   keywords: [
     "Rana Summar",
+    "Summar Rajpoot",
+    "Rana Summar Rajpoot",
     "ranasummar",
     "Full-Stack AI Developer",
     "AI developer Pakistan",
@@ -35,6 +37,7 @@ export const metadata: Metadata = {
     "AI agents",
     "freelance developer Pakistan",
     "Rana Summar portfolio",
+    "Summar Rajpoot portfolio",
   ],
   authors: [{ name: "Rana Summar", url: SITE_URL }],
   creator: "Rana Summar",
@@ -47,7 +50,7 @@ export const metadata: Metadata = {
     apple: "/icon.svg",
   },
   openGraph: {
-    title: "Rana Summar | Full-Stack AI Developer",
+    title: "Rana Summar (Summar Rajpoot) | Full-Stack AI Developer",
     description: seoDescription,
     url: SITE_URL,
     siteName: "Rana Summar Portfolio",
@@ -56,7 +59,7 @@ export const metadata: Metadata = {
         url: heroImageUrl,
         width: 800,
         height: 800,
-        alt: "Rana Summar — Full-Stack AI Developer from Pakistan",
+        alt: "Rana Summar (Summar Rajpoot) — Full-Stack AI Developer from Pakistan",
       },
     ],
     type: "website",
@@ -64,7 +67,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rana Summar | Full-Stack AI Developer",
+    title: "Rana Summar (Summar Rajpoot) | Full-Stack AI Developer",
     description: seoDescription,
     images: [heroImageUrl],
     creator: "@RanaSummar4",
@@ -80,7 +83,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Rana Summar",
-  alternateName: "ranasummar",
+  alternateName: ["Summar Rajpoot", "Rana Summar Rajpoot", "ranasummar"],
   url: SITE_URL,
   image: `${SITE_URL}${heroImageUrl.replace(/%20/g, " ")}`,
   jobTitle: "Full-Stack AI Developer",
@@ -97,6 +100,9 @@ const jsonLd = {
     "https://www.fiverr.com/rana_summar",
     "https://www.upwork.com/freelancers/ranasummar",
     "https://x.com/RanaSummar4",
+    "https://www.facebook.com/rana.summar.756",
+    "https://www.instagram.com/ranasummar_0/",
+    "https://www.youtube.com/@ranasummar_0",
   ],
 };
 
