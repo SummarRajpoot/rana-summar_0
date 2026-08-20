@@ -22,7 +22,10 @@ const seoDescription =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Rana Summar | Full-Stack AI Developer — Portfolio",
+  title: {
+    default: "Rana Summar | Full-Stack AI Developer",
+    template: "%s | Rana Summar",
+  },
   description: seoDescription,
   applicationName: "Rana Summar",
   keywords: [
