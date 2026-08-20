@@ -515,19 +515,30 @@ export default function Home() {
                 </div>
               </FadeIn>
 
-              <FadeIn delay={0.4} className="bg-white/5 rounded-2xl p-8 border border-white/10 hover:border-accent/50 transition-colors flex flex-col">
-                <h3 className="text-2xl font-bold font-heading text-white mb-3">AgroTrade International</h3>
-                <p className="text-white/80 font-body mb-6 flex-grow">
-                  International agricultural commodities trading platform.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {["Next.js 14", "Prisma", "Supabase", "World Bank Commodity Price API"].map(tag => (
-                    <span key={tag} className="text-xs font-semibold bg-white/10 text-white/90 px-3 py-1 rounded-full">{tag}</span>
-                  ))}
+              <FadeIn delay={0.4} className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-accent/50 transition-colors flex flex-col">
+                <div className="relative w-full h-48 bg-white/5">
+                  <Image
+                    src="/images/githubagent.png"
+                    alt="GitHub Agent — project screenshot"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <div className="flex gap-4">
-                  <Link href="#" className="text-sm font-semibold text-accent hover:text-white transition-colors">View Live Demo &rarr;</Link>
-                  <Link href="#" className="text-sm font-semibold text-white/60 hover:text-white transition-colors">GitHub &rarr;</Link>
+                <div className="p-8 flex flex-col flex-grow">
+                  <h3 className="text-2xl font-bold font-heading text-white mb-3">GitHub Agent</h3>
+                  <p className="text-white/80 font-body mb-6 flex-grow">
+                    Autonomous AI Agent for GitHub repository analysis, automated code review, issue management, and workflow automation.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {["Next.js", "FastAPI", "LangChain / AI Agents", "GitHub API", "Python", "Vercel"].map(tag => (
+                      <span key={tag} className="text-xs font-semibold bg-white/10 text-white/90 px-3 py-1 rounded-full">{tag}</span>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap gap-4">
+                    <Link href="https://githubagent.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-accent hover:text-white transition-colors">View Live Demo &rarr;</Link>
+                    <Link href="https://github.com/SummarRajpoot/github-agent-frontend" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white/60 hover:text-white transition-colors">Frontend &rarr;</Link>
+                    <Link href="https://github.com/SummarRajpoot/github-agent-backend" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white/60 hover:text-white transition-colors">Backend &rarr;</Link>
+                  </div>
                 </div>
               </FadeIn>
             </div>
