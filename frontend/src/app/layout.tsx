@@ -62,10 +62,10 @@ export const metadata: Metadata = {
     siteName: "Rana Summar",
     images: [
       {
-        url: heroImageUrl,
-        width: 800,
-        height: 800,
-        alt: "Rana Summar (Summar Rajpoot) — Full-Stack AI Developer from Pakistan",
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Rana Summar — Full-Stack AI Developer",
       },
     ],
     type: "website",
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Rana Summar (Summar Rajpoot) | Full-Stack AI Developer",
     description: seoDescription,
-    images: [heroImageUrl],
+    images: ["/images/og-image.png"],
     creator: "@RanaSummar4",
   },
   robots: {
