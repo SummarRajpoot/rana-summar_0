@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Rana Summar | Full-Stack AI Developer — Portfolio",
   description: seoDescription,
+  applicationName: "Rana Summar",
   keywords: [
     "Rana Summar",
     "Summar Rajpoot",
@@ -41,19 +42,24 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Rana Summar", url: SITE_URL }],
   creator: "Rana Summar",
+  publisher: "Rana Summar",
   alternates: {
     canonical: "/",
   },
   icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      { url: "/favicon.png", sizes: "512x512", type: "image/png" },
+      { url: "/icon.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.png",
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "Rana Summar (Summar Rajpoot) | Full-Stack AI Developer",
     description: seoDescription,
     url: SITE_URL,
-    siteName: "Rana Summar Portfolio",
+    siteName: "Rana Summar",
     images: [
       {
         url: heroImageUrl,
@@ -79,7 +85,15 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Rana Summar",
+  alternateName: ["Rana Summar Portfolio", "Summar Rajpoot", "Rana Summar Rajpoot"],
+  url: SITE_URL,
+};
+
+const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Rana Summar",
@@ -119,7 +133,11 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         {children}
       </body>
