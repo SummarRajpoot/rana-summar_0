@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
+import { AIChatBot } from "@/components/AIChatBot";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -140,7 +141,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         {children}
+        <AIChatBot />
       </body>
     </html>
   );
 }
+
