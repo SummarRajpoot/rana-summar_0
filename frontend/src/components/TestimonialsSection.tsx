@@ -2,11 +2,15 @@
 
 import { useState, useEffect, useRef } from "react";
 import { FadeIn } from "@/components/FadeIn";
+import { ComingSoon } from "@/components/ComingSoon";
 import { motion } from "framer-motion";
 
 const MAX_NAME_LENGTH = 50;
 const MAX_MESSAGE_LENGTH = 300;
 const SUBMIT_COOLDOWN_MS = 3000;
+
+/** Flip to `true` to restore live testimonials + the public submission form. */
+const SHOW_TESTIMONIALS = false;
 
 interface Testimonial {
   id: string;
@@ -289,10 +293,12 @@ function TestimonialForm() {
 
 export function TestimonialsSection() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(SHOW_TESTIMONIALS);
   const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!SHOW_TESTIMONIALS) return;
+
     let cancelled = false;
 
     async function loadTestimonials() {
@@ -341,96 +347,102 @@ export function TestimonialsSection() {
           </p>
         </FadeIn>
 
-        {loading && (
-          <div className="flex items-center justify-center py-16">
-            <svg
-              className="animate-spin w-8 h-8 text-accent"
-              fill="none"
-              viewBox="0 0 24 24"
-              aria-label="Loading testimonials"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              />
-            </svg>
-          </div>
-        )}
-
-        {!loading && fetchError && (
-          <div className="text-center py-12">
-            <p className="text-foreground/50 font-body text-sm">{fetchError}</p>
-          </div>
-        )}
-
-        {!loading && !fetchError && testimonials.length === 0 && (
-          <div className="text-center py-16 bg-surface-dark/5 border border-foreground/10 rounded-2xl">
-            <p className="text-foreground/50 font-body">
-              No testimonials yet — check back soon.
-            </p>
-          </div>
-        )}
-
-        {!loading && !fetchError && testimonials.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((t, index) => {
-              const subtitle = [t.role, t.company].filter(Boolean).join(" · ");
-              return (
-                <motion.div
-                  key={t.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.35, delay: index * 0.05 }}
-                  className="bg-surface-dark rounded-2xl p-7 border border-foreground/10 flex flex-col h-full"
+        {!SHOW_TESTIMONIALS ? (
+          <ComingSoon message="Client and collaborator feedback will be added here soon." />
+        ) : (
+          <>
+            {loading && (
+              <div className="flex items-center justify-center py-16">
+                <svg
+                  className="animate-spin w-8 h-8 text-accent"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  aria-label="Loading testimonials"
                 >
-                  {typeof t.rating === "number" && (
-                    <div className="mb-4">
-                      <StarRating rating={t.rating} />
-                    </div>
-                  )}
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+              </div>
+            )}
 
-                  <blockquote className="text-white/75 font-body text-sm leading-relaxed flex-grow mb-6">
-                    &ldquo;{t.message}&rdquo;
-                  </blockquote>
+            {!loading && fetchError && (
+              <div className="text-center py-12">
+                <p className="text-foreground/50 font-body text-sm">{fetchError}</p>
+              </div>
+            )}
 
-                  <div className="flex items-center gap-3 pt-4 border-t border-white/10">
-                    <div className="w-10 h-10 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center shrink-0">
-                      <span className="text-accent font-bold text-sm font-heading">
-                        {t.name.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-white font-semibold text-sm truncate">{t.name}</p>
-                      {subtitle && (
-                        <p className="text-white/50 text-xs font-body truncate">{subtitle}</p>
+            {!loading && !fetchError && testimonials.length === 0 && (
+              <div className="text-center py-16 bg-surface-dark/5 border border-foreground/10 rounded-2xl">
+                <p className="text-foreground/50 font-body">
+                  No testimonials yet — check back soon.
+                </p>
+              </div>
+            )}
+
+            {!loading && !fetchError && testimonials.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {testimonials.map((t, index) => {
+                  const subtitle = [t.role, t.company].filter(Boolean).join(" · ");
+                  return (
+                    <motion.div
+                      key={t.id}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-40px" }}
+                      transition={{ duration: 0.35, delay: index * 0.05 }}
+                      className="bg-surface-dark rounded-2xl p-7 border border-foreground/10 flex flex-col h-full"
+                    >
+                      {typeof t.rating === "number" && (
+                        <div className="mb-4">
+                          <StarRating rating={t.rating} />
+                        </div>
                       )}
-                      {t.created_at && (
-                        <p className="text-white/40 text-xs font-body">{formatDate(t.created_at)}</p>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        )}
 
-        {!loading && (
-          <FadeIn delay={0.1}>
-            <div className="max-w-xl mx-auto">
-              <TestimonialForm />
-            </div>
-          </FadeIn>
+                      <blockquote className="text-white/75 font-body text-sm leading-relaxed flex-grow mb-6">
+                        &ldquo;{t.message}&rdquo;
+                      </blockquote>
+
+                      <div className="flex items-center gap-3 pt-4 border-t border-white/10">
+                        <div className="w-10 h-10 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center shrink-0">
+                          <span className="text-accent font-bold text-sm font-heading">
+                            {t.name.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-white font-semibold text-sm truncate">{t.name}</p>
+                          {subtitle && (
+                            <p className="text-white/50 text-xs font-body truncate">{subtitle}</p>
+                          )}
+                          {t.created_at && (
+                            <p className="text-white/40 text-xs font-body">{formatDate(t.created_at)}</p>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            )}
+
+            {!loading && (
+              <FadeIn delay={0.1}>
+                <div className="max-w-xl mx-auto">
+                  <TestimonialForm />
+                </div>
+              </FadeIn>
+            )}
+          </>
         )}
       </div>
     </section>

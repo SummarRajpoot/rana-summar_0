@@ -1,6 +1,7 @@
 import { FadeIn } from "@/components/FadeIn";
 import { Navbar } from "@/components/Navbar";
 import { SkillsSection } from "@/components/SkillsSection";
+import { MySelfSection } from "@/components/MySelfSection";
 import { ContactSection } from "@/components/ContactSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import Image from "next/image";
@@ -430,6 +431,9 @@ export default function Home() {
           </FadeIn>
         </section>
 
+        {/* ── MY SELF ─────────────────────────────────────────── */}
+        <MySelfSection />
+
         {/* ── SKILLS ──────────────────────────────────────────── */}
         <SkillsSection />
 
@@ -564,6 +568,7 @@ export default function Home() {
                     src="/certificates/chase_value_certificate.jpeg"
                     alt="Chase Value Certificate of Achievement — Star Badge Award"
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 512px"
                     className="object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>
@@ -577,15 +582,16 @@ export default function Home() {
                 </div>
               </FadeIn>
 
-              {/* Certificate 2: CS50x Puzzle Day — PDF with iframe preview */}
+              {/* Certificate 2: CS50x Puzzle Day */}
               <FadeIn delay={0.2} className="bg-surface-dark rounded-2xl overflow-hidden border border-foreground/10 hover:border-accent/50 transition-colors flex flex-col">
                 <div className="relative w-full h-56 overflow-hidden bg-white/5">
-                  <iframe
-                    src="/certificates/cs50x_puzzle_day_2026.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
-                    className="absolute w-[130%] h-[130%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none select-none"
-                    title="CS50x Puzzle Day 2026 Certificate Preview"
+                  <Image
+                    src="/certificates/cs50x_puzzle_day_2026.jpg"
+                    alt="CS50x Puzzle Day 2026 Certificate"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 512px"
+                    className="object-cover hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-transparent z-10" /> {/* Click prevention overlay */}
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-lg font-bold font-heading text-white mb-1">CS50x Puzzle Day 2026</h3>
@@ -610,15 +616,16 @@ export default function Home() {
                 </div>
               </FadeIn>
 
-              {/* Certificate 3: Intro to Cybersecurity — PDF with iframe preview */}
+              {/* Certificate 3: Intro to Cybersecurity */}
               <FadeIn delay={0.3} className="bg-surface-dark rounded-2xl overflow-hidden border border-foreground/10 hover:border-accent/50 transition-colors flex flex-col">
                 <div className="relative w-full h-56 overflow-hidden bg-white/5">
-                  <iframe
-                    src="/certificates/introduction_to_cybersecurity_certificate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
-                    className="absolute w-[130%] h-[130%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none select-none"
-                    title="Introduction to Cybersecurity Certificate Preview"
+                  <Image
+                    src="/certificates/introduction_to_cybersecurity_certificate.jpg"
+                    alt="Introduction to Cybersecurity Certificate"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 512px"
+                    className="object-cover hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-transparent z-10" />
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-lg font-bold font-heading text-white mb-1">Introduction to Cybersecurity</h3>
@@ -643,15 +650,16 @@ export default function Home() {
                 </div>
               </FadeIn>
 
-              {/* Certificate 4: Networking Devices — PDF with iframe preview */}
+              {/* Certificate 4: Networking Devices */}
               <FadeIn delay={0.4} className="bg-surface-dark rounded-2xl overflow-hidden border border-foreground/10 hover:border-accent/50 transition-colors flex flex-col">
                 <div className="relative w-full h-56 overflow-hidden bg-white/5">
-                  <iframe
-                    src="/certificates/networking_devices_and_initial_configuration.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
-                    className="absolute w-[130%] h-[130%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none select-none"
-                    title="Networking Devices Certificate Preview"
+                  <Image
+                    src="/certificates/networking_devices_and_initial_configuration.jpg"
+                    alt="Networking Devices Certificate"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 512px"
+                    className="object-cover hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-transparent z-10" />
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-lg font-bold font-heading text-white mb-1">Networking Devices and Initial Configuration</h3>
@@ -676,15 +684,16 @@ export default function Home() {
                 </div>
               </FadeIn>
 
-              {/* Certificate 5: Saylani Agentic AI (Batch-1) — PDF with iframe preview */}
+              {/* Certificate 5: Saylani Agentic AI (Batch-1) */}
               <FadeIn delay={0.5} className="bg-surface-dark rounded-2xl overflow-hidden border border-foreground/10 hover:border-accent/50 transition-colors flex flex-col">
                 <div className="relative w-full h-56 overflow-hidden bg-white/5">
-                  <iframe
-                    src="/certificates/saylani-agentic-ai.png.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
-                    className="absolute w-[130%] h-[130%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none select-none"
-                    title="Saylani Agentic AI Batch-1 Certificate Preview"
+                  <Image
+                    src="/certificates/saylani-agentic-ai.jpg"
+                    alt="Saylani Agentic AI Batch-1 Certificate"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 512px"
+                    className="object-cover hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-transparent z-10" />
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-lg font-bold font-heading text-white mb-1">Agentic AI (Batch-1)</h3>
