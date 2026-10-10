@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { FadeIn } from "@/components/FadeIn";
 import { motion, useReducedMotion } from "framer-motion";
 
-const MAX_NAME_LENGTH = 80;
+const MAX_NAME_LENGTH = 60;
 const MAX_ROLE_LENGTH = 80;
 const MAX_COMPANY_LENGTH = 80;
+const MIN_MESSAGE_LENGTH = 20;
 const MAX_MESSAGE_LENGTH = 500;
 const SUBMIT_COOLDOWN_MS = 4000;
 
@@ -63,7 +64,7 @@ function formatDate(iso: string): string {
 }
 
 interface TestimonialFormProps {
-  onSuccess?: () => void;
+  onSuccess?: (newTestimonial?: Testimonial) => void;
 }
 
 function TestimonialForm({ onSuccess }: TestimonialFormProps) {
@@ -108,7 +109,7 @@ function TestimonialForm({ onSuccess }: TestimonialFormProps) {
     const trimmedCompany = company.trim();
 
     if (!trimmedName || !trimmedMessage) {
-      setErrorMessage("Please enter your name and message.");
+      setErrorMessage("Please enter your name and review message.");
       return;
     }
 
@@ -117,8 +118,13 @@ function TestimonialForm({ onSuccess }: TestimonialFormProps) {
       return;
     }
 
+    if (trimmedMessage.length < MIN_MESSAGE_LENGTH) {
+      setErrorMessage(`Review message must be at least ${MIN_MESSAGE_LENGTH} characters long.`);
+      return;
+    }
+
     if (trimmedMessage.length > MAX_MESSAGE_LENGTH) {
-      setErrorMessage(`Message must be ${MAX_MESSAGE_LENGTH} characters or fewer.`);
+      setErrorMessage(`Review message must be ${MAX_MESSAGE_LENGTH} characters or fewer.`);
       return;
     }
 
@@ -158,9 +164,11 @@ function TestimonialForm({ onSuccess }: TestimonialFormProps) {
             ? detail
             : Array.isArray(detail)
               ? detail.map((d: { msg?: string }) => d.msg).filter(Boolean).join(" ")
-              : "Failed to submit testimonial. Please try again.";
+              : "Failed to submit testimonial. Please check your input.";
         throw new Error(errMsg || "Failed to submit testimonial. Please try again.");
       }
+
+      const savedTestimonial: Testimonial = await response.json();
 
       setIsSubmitted(true);
       setName("");
@@ -168,7 +176,10 @@ function TestimonialForm({ onSuccess }: TestimonialFormProps) {
       setCompany("");
       setMessage("");
       setRating(5);
-      if (onSuccess) onSuccess();
+
+      if (onSuccess) {
+        onSuccess(savedTestimonial);
+      }
     } catch (err) {
       setErrorMessage(
         err instanceof Error
@@ -195,10 +206,10 @@ function TestimonialForm({ onSuccess }: TestimonialFormProps) {
           </svg>
         </div>
         <h4 className="text-white font-bold font-heading text-xl sm:text-2xl mb-2">
-          Thanks! Your review will appear after approval.
+          Thank you! Your review is now live.
         </h4>
         <p className="text-white/60 font-body text-sm sm:text-base max-w-md mx-auto leading-relaxed mb-6">
-          I review all submissions to keep feedback genuine and spam-free. Thank you for taking the time to share your experience!
+          Your feedback has been added directly to the reviews section above. Thank you for your support!
         </p>
         <button
           type="button"
@@ -227,7 +238,7 @@ function TestimonialForm({ onSuccess }: TestimonialFormProps) {
         Leave a Testimonial
       </h3>
       <p className="text-white/60 font-body text-sm sm:text-base mb-8">
-        Share your experience working with me. Reviews are reviewed before being published.
+        Share your experience working with me.
       </p>
 
       {/* Honeypot for bot filtering */}
@@ -356,30 +367,43 @@ function TestimonialForm({ onSuccess }: TestimonialFormProps) {
 
         {/* Message */}
         <div>
-          <label
-            htmlFor="testimonial_message"
-            className="block text-sm font-semibold text-white/90 mb-1.5 font-body"
-          >
-            Your Review <span className="text-accent">*</span>
-          </label>
+          <div className="flex items-center justify-between mb-1.5">
+            <label
+              htmlFor="testimonial_message"
+              className="block text-sm font-semibold text-white/90 font-body"
+            >
+              Your Review <span className="text-accent">*</span>
+            </label>
+            <span className="text-xs text-white/40 font-body">
+              Min {MIN_MESSAGE_LENGTH} characters
+            </span>
+          </div>
           <textarea
             id="testimonial_message"
             name="message"
             rows={4}
             required
+            minLength={MIN_MESSAGE_LENGTH}
             maxLength={MAX_MESSAGE_LENGTH}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="How was your experience working with Rana Summar?"
+            placeholder="Share your feedback (minimum 20 characters, no links or HTML)..."
             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none transition-colors font-body text-sm resize-y"
           />
-          <p className="text-white/40 text-xs mt-1 font-body">
-            {message.length}/{MAX_MESSAGE_LENGTH}
-          </p>
+          <div className="flex items-center justify-between mt-1 text-xs font-body">
+            <span className={message.trim().length > 0 && message.trim().length < MIN_MESSAGE_LENGTH ? "text-amber-400" : "text-white/40"}>
+              {message.trim().length < MIN_MESSAGE_LENGTH
+                ? `${MIN_MESSAGE_LENGTH - message.trim().length} more characters needed`
+                : "Length requirement met"}
+            </span>
+            <span className="text-white/40">
+              {message.length}/{MAX_MESSAGE_LENGTH}
+            </span>
+          </div>
         </div>
 
         {errorMessage && (
-          <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl p-3.5 text-center font-medium font-body">
+          <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl p-3.5 text-center font-medium font-body leading-relaxed">
             {errorMessage}
           </div>
         )}
@@ -411,7 +435,7 @@ function TestimonialForm({ onSuccess }: TestimonialFormProps) {
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   />
                 </svg>
-                <span>Submitting Review...</span>
+                <span>Publishing Review...</span>
               </>
             ) : (
               <span>Submit Testimonial</span>
@@ -430,39 +454,45 @@ export function TestimonialsSection() {
   const formRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion() ?? false;
 
-  useEffect(() => {
-    let cancelled = false;
+  const loadTestimonials = useCallback(async () => {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-    async function loadTestimonials() {
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    try {
+      const response = await fetch(`${baseUrl}/testimonials`);
 
-      try {
-        const response = await fetch(`${baseUrl}/testimonials`);
-
-        if (!response.ok) {
-          throw new Error("Could not load testimonials.");
-        }
-
-        const data = await response.json();
-        if (!cancelled && Array.isArray(data)) {
-          setTestimonials(data);
-        }
-      } catch {
-        if (!cancelled) {
-          setFetchError("Testimonials are temporarily unavailable. Please check back soon.");
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+      if (!response.ok) {
+        throw new Error("Could not load testimonials.");
       }
-    }
 
-    loadTestimonials();
-    return () => {
-      cancelled = true;
-    };
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        setTestimonials(data);
+        setFetchError(null);
+      }
+    } catch {
+      setFetchError("Testimonials are temporarily unavailable. Please check back soon.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    loadTestimonials();
+  }, [loadTestimonials]);
+
+  const handleTestimonialSubmitted = (newTestimonial?: Testimonial) => {
+    // If backend returned the newly saved testimonial, prepend it immediately
+    if (newTestimonial && newTestimonial.id) {
+      setTestimonials((prev) => {
+        // Avoid duplicate if it already exists
+        const exists = prev.some((t) => t.id === newTestimonial.id);
+        if (exists) return prev;
+        return [newTestimonial, ...prev];
+      });
+    }
+    // Also re-fetch in the background to ensure consistency with backend
+    loadTestimonials();
+  };
 
   return (
     <section id="testimonials" className="py-24 px-4 sm:px-6 md:px-8 bg-background border-t border-foreground/5">
@@ -520,7 +550,7 @@ export function TestimonialsSection() {
           </div>
         )}
 
-        {/* Fallback Coming Soon Card when zero approved reviews */}
+        {/* Fallback Empty State Card when zero approved/visible reviews */}
         {!loading && !fetchError && testimonials.length === 0 && (
           <motion.div
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
@@ -529,7 +559,7 @@ export function TestimonialsSection() {
           >
             <div className="rounded-3xl border border-dashed border-foreground/20 bg-surface-dark/5 px-6 py-12 sm:px-10 sm:py-14 text-center shadow-xs">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-3.5 py-1 text-xs font-semibold font-heading text-accent mb-4">
-                🚧 Coming Soon
+                No reviews yet
               </span>
               <h3 className="text-foreground font-bold font-heading text-xl sm:text-2xl mb-2">
                 Be the first to leave feedback
@@ -625,7 +655,7 @@ export function TestimonialsSection() {
 
         {/* Submission Form Section */}
         <div ref={formRef} className="max-w-2xl mx-auto">
-          <TestimonialForm />
+          <TestimonialForm onSuccess={handleTestimonialSubmitted} />
         </div>
       </div>
     </section>

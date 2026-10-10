@@ -17,6 +17,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from database import close_client, get_testimonials_collection
+from profanity_filter import contains_profanity
 
 load_dotenv()
 
@@ -57,17 +58,17 @@ app.add_middleware(
 
 
 # ── In-Memory Rate Limiting for Submissions ───────────────────────────────────
-# Tracks submission timestamps per IP (max 5 submissions per 10 minutes)
+# Max 2 submissions per IP per hour (3600 seconds)
 _ip_submission_history = defaultdict(list)
-RATE_LIMIT_WINDOW_SECONDS = 600  # 10 minutes
-RATE_LIMIT_MAX_REQUESTS = 5
+RATE_LIMIT_WINDOW_SECONDS = 3600  # 1 hour
+RATE_LIMIT_MAX_REQUESTS = 2
 
 
 def check_rate_limit(request: Request) -> None:
     client_ip = request.client.host if request.client else "unknown"
     now = time.time()
 
-    # Clean old records outside the window
+    # Clean old records outside the 1-hour window
     _ip_submission_history[client_ip] = [
         t for t in _ip_submission_history[client_ip] if now - t < RATE_LIMIT_WINDOW_SECONDS
     ]
@@ -75,14 +76,40 @@ def check_rate_limit(request: Request) -> None:
     if len(_ip_submission_history[client_ip]) >= RATE_LIMIT_MAX_REQUESTS:
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-            detail="Too many submissions. Please wait a few minutes before trying again.",
+            detail="Too many submissions. You can submit up to 2 reviews per hour.",
         )
 
     _ip_submission_history[client_ip].append(now)
 
 
-def strip_html_tags(text: Optional[str]) -> str:
-    """Removes HTML tags and unescapes entities to prevent XSS / markup injection."""
+# ── Validation & Sanitization Helpers ─────────────────────────────────────────
+def contains_links_or_urls(text: Optional[str]) -> bool:
+    """Checks for URLs, schemes, www, or web domains."""
+    if not text:
+        return False
+    # Match http, https, or www
+    if re.search(r"(?:https?://|www\.)\S+", text, re.IGNORECASE):
+        return True
+    # Match domain names with common TLDs (e.g. site.com, link.net, portfolio.io)
+    domain_pattern = r"\b[a-zA-Z0-9-]+\.(?:com|net|org|io|ai|co|app|xyz|dev|me|info|biz|site|online|tech|pk|in|uk|us|ca)\b"
+    if re.search(domain_pattern, text, re.IGNORECASE):
+        return True
+    return False
+
+
+def contains_html_or_script(text: Optional[str]) -> bool:
+    """Detects HTML tags, script elements, or markup injections."""
+    if not text:
+        return False
+    if re.search(r"<\s*script\b[^>]*>", text, re.IGNORECASE):
+        return True
+    if re.search(r"<\s*/?[a-zA-Z][^>]*>", text):
+        return True
+    return False
+
+
+def sanitize_text(text: Optional[str]) -> str:
+    """Strips leading/trailing whitespace and unescapes standard entities."""
     if not text:
         return ""
     clean = re.sub(r"<[^>]*>", "", text)
@@ -91,8 +118,8 @@ def strip_html_tags(text: Optional[str]) -> str:
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
 class TestimonialCreate(BaseModel):
-    name: str = Field(..., min_length=2, max_length=80)
-    message: str = Field(..., min_length=5, max_length=600)
+    name: str = Field(..., min_length=2, max_length=60)
+    message: str = Field(..., min_length=20, max_length=500)
     role: Optional[str] = Field(None, max_length=80)
     company: Optional[str] = Field(None, max_length=80)
     rating: Optional[int] = Field(5, ge=1, le=5)
@@ -116,7 +143,8 @@ class AdminTestimonialResponse(BaseModel):
     role: Optional[str] = None
     company: Optional[str] = None
     rating: Optional[int] = 5
-    approved: bool = False
+    approved: bool = True
+    hidden: bool = False
     created_at: str
 
 
@@ -164,13 +192,20 @@ async def health_check():
 # ── Public Testimonials Endpoints ─────────────────────────────────────────────
 @app.get("/testimonials", response_model=List[TestimonialResponse])
 async def get_testimonials():
-    """Returns only approved testimonials, newest first. Private fields are omitted."""
+    """
+    Returns only approved and non-hidden testimonials, newest first.
+    Private fields (IP, email, etc.) are strictly excluded.
+    """
     collection = get_testimonials_collection()
     if collection is None:
         return []
 
     try:
-        cursor = collection.find({"approved": True}).sort("created_at", -1).limit(50)
+        # approved = True AND hidden != True
+        cursor = collection.find(
+            {"approved": True, "hidden": {"$ne": True}}
+        ).sort("created_at", -1).limit(50)
+
         items = []
         async for doc in cursor:
             items.append(
@@ -195,25 +230,76 @@ async def get_testimonials():
 @app.post("/testimonials", response_model=TestimonialResponse, status_code=status.HTTP_201_CREATED)
 async def create_testimonial(payload: TestimonialCreate, request: Request):
     """
-    Submits a new testimonial.
-    - Always saved with approved = False.
-    - Input is sanitized and validated.
-    - Rate-limited and includes honeypot detection.
+    Submits a new testimonial with AUTO-APPROVAL:
+    - Auto-approved (approved = True, hidden = False).
+    - Rate limited to 2 per hour per IP.
+    - Safety filters: blocks URLs/links, HTML/scripts, profanity, and duplicates.
     """
-    # Rate limit check
-    check_rate_limit(request)
-
-    # Honeypot spam check: if filled, pretend success without saving
+    # 1. Honeypot check: if filled by a spam bot, silently return fake success without saving
     if payload.website and payload.website.strip():
         return TestimonialResponse(
             id=str(ObjectId()),
-            name=strip_html_tags(payload.name),
-            message=strip_html_tags(payload.message),
-            role=strip_html_tags(payload.role) if payload.role else None,
-            company=strip_html_tags(payload.company) if payload.company else None,
+            name=sanitize_text(payload.name),
+            message=sanitize_text(payload.message),
+            role=sanitize_text(payload.role) if payload.role else None,
+            company=sanitize_text(payload.company) if payload.company else None,
             rating=payload.rating or 5,
             created_at=datetime.now(timezone.utc).isoformat(),
         )
+
+    # 2. Rate limiting check (max 2 submissions / hour)
+    check_rate_limit(request)
+
+    # 3. HTML and script tags check
+    for field_name, value in [
+        ("name", payload.name),
+        ("role", payload.role),
+        ("company", payload.company),
+        ("message", payload.message),
+    ]:
+        if contains_html_or_script(value):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="HTML and script tags are not allowed in testimonials.",
+            )
+
+    # 4. Links and URLs check
+    for field_name, value in [
+        ("name", payload.name),
+        ("role", payload.role),
+        ("company", payload.company),
+        ("message", payload.message),
+    ]:
+        if contains_links_or_urls(value):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Links and URLs are not allowed in testimonials.",
+            )
+
+    # 5. Review length check (min 20, max 500)
+    clean_message = sanitize_text(payload.message)
+    if len(clean_message) < 20:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Review message must be at least 20 characters long.",
+        )
+    if len(clean_message) > 500:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Review message must be 500 characters or fewer.",
+        )
+
+    clean_name = sanitize_text(payload.name)
+    clean_role = sanitize_text(payload.role) if payload.role else None
+    clean_company = sanitize_text(payload.company) if payload.company else None
+
+    # 6. Profanity / Abuse check (English & Roman Urdu/Hindi)
+    for field_val in [clean_name, clean_role, clean_company, clean_message]:
+        if field_val and contains_profanity(field_val):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Your submission contains prohibited or offensive language.",
+            )
 
     collection = get_testimonials_collection()
     if collection is None:
@@ -222,20 +308,31 @@ async def create_testimonial(payload: TestimonialCreate, request: Request):
             detail="Database connection not configured or unavailable",
         )
 
+    # 7. Duplicate submission detection (same name & message)
+    existing_duplicate = await collection.find_one(
+        {
+            "name": {"$regex": f"^{re.escape(clean_name)}$", "$options": "i"},
+            "message": clean_message,
+        }
+    )
+    if existing_duplicate:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="A testimonial with this name and message has already been submitted.",
+        )
+
     now_iso = datetime.now(timezone.utc).isoformat()
-    clean_name = strip_html_tags(payload.name)
-    clean_message = strip_html_tags(payload.message)
-    clean_role = strip_html_tags(payload.role) if payload.role else None
-    clean_company = strip_html_tags(payload.company) if payload.company else None
     rating = payload.rating if payload.rating and 1 <= payload.rating <= 5 else 5
 
+    # 8. Save with approved = True (Auto-Approved) and hidden = False
     doc = {
         "name": clean_name,
         "message": clean_message,
         "role": clean_role,
         "company": clean_company,
         "rating": rating,
-        "approved": False,  # Pending approval by admin
+        "approved": True,  # Auto-approved!
+        "hidden": False,   # Publicly visible
         "created_at": now_iso,
     }
 
@@ -263,8 +360,8 @@ async def create_testimonial(payload: TestimonialCreate, request: Request):
     response_model=List[AdminTestimonialResponse],
     dependencies=[Depends(verify_admin_auth)],
 )
-async def admin_get_testimonials(approved: Optional[bool] = None):
-    """Admin: List all testimonials (with approval status). Can filter by ?approved=true|false."""
+async def admin_get_testimonials(hidden: Optional[bool] = None):
+    """Admin: List all testimonials (with hidden/approved status). Filter by ?hidden=true|false."""
     collection = get_testimonials_collection()
     if collection is None:
         raise HTTPException(
@@ -273,8 +370,8 @@ async def admin_get_testimonials(approved: Optional[bool] = None):
         )
 
     query = {}
-    if approved is not None:
-        query["approved"] = approved
+    if hidden is not None:
+        query["hidden"] = hidden
 
     try:
         cursor = collection.find(query).sort("created_at", -1).limit(100)
@@ -288,7 +385,8 @@ async def admin_get_testimonials(approved: Optional[bool] = None):
                     role=doc.get("role"),
                     company=doc.get("company"),
                     rating=doc.get("rating", 5),
-                    approved=bool(doc.get("approved", False)),
+                    approved=bool(doc.get("approved", True)),
+                    hidden=bool(doc.get("hidden", False)),
                     created_at=str(doc.get("created_at", datetime.now(timezone.utc).isoformat())),
                 )
             )
@@ -301,11 +399,11 @@ async def admin_get_testimonials(approved: Optional[bool] = None):
 
 
 @app.patch(
-    "/admin/testimonials/{testimonial_id}/approve",
+    "/admin/testimonials/{testimonial_id}/hide",
     dependencies=[Depends(verify_admin_auth)],
 )
-async def admin_approve_testimonial(testimonial_id: str):
-    """Admin: Approve a testimonial so it appears publicly."""
+async def admin_hide_testimonial(testimonial_id: str):
+    """Admin: Hide a testimonial so it no longer appears publicly."""
     collection = get_testimonials_collection()
     if collection is None:
         raise HTTPException(
@@ -321,22 +419,22 @@ async def admin_approve_testimonial(testimonial_id: str):
             detail="Invalid testimonial ID format",
         )
 
-    result = await collection.update_one({"_id": oid}, {"$set": {"approved": True}})
+    result = await collection.update_one({"_id": oid}, {"$set": {"hidden": True}})
     if result.matched_count == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Testimonial not found",
         )
 
-    return {"success": True, "id": testimonial_id, "approved": True}
+    return {"success": True, "id": testimonial_id, "hidden": True}
 
 
 @app.patch(
-    "/admin/testimonials/{testimonial_id}/reject",
+    "/admin/testimonials/{testimonial_id}/unhide",
     dependencies=[Depends(verify_admin_auth)],
 )
-async def admin_reject_testimonial(testimonial_id: str):
-    """Admin: Reject / unapprove a testimonial."""
+async def admin_unhide_testimonial(testimonial_id: str):
+    """Admin: Unhide a previously hidden testimonial."""
     collection = get_testimonials_collection()
     if collection is None:
         raise HTTPException(
@@ -352,14 +450,14 @@ async def admin_reject_testimonial(testimonial_id: str):
             detail="Invalid testimonial ID format",
         )
 
-    result = await collection.update_one({"_id": oid}, {"$set": {"approved": False}})
+    result = await collection.update_one({"_id": oid}, {"$set": {"hidden": False, "approved": True}})
     if result.matched_count == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Testimonial not found",
         )
 
-    return {"success": True, "id": testimonial_id, "approved": False}
+    return {"success": True, "id": testimonial_id, "hidden": False}
 
 
 @app.delete(
@@ -367,7 +465,7 @@ async def admin_reject_testimonial(testimonial_id: str):
     dependencies=[Depends(verify_admin_auth)],
 )
 async def admin_delete_testimonial(testimonial_id: str):
-    """Admin: Permanently delete a testimonial."""
+    """Admin: Permanently delete a testimonial from the database."""
     collection = get_testimonials_collection()
     if collection is None:
         raise HTTPException(
