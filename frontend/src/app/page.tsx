@@ -1,9 +1,11 @@
 import { FadeIn } from "@/components/FadeIn";
 import { Navbar } from "@/components/Navbar";
 import { SkillsSection } from "@/components/SkillsSection";
+import { ServicesSection } from "@/components/ServicesSection";
 import { MySelfSection } from "@/components/MySelfSection";
 import { ContactSection } from "@/components/ContactSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { CertificatesTrustBlock } from "@/components/CertificatesTrustBlock";
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
@@ -437,6 +439,9 @@ export default function Home() {
         {/* ── SKILLS ──────────────────────────────────────────── */}
         <SkillsSection />
 
+        {/* ── SERVICES ────────────────────────────────────────── */}
+        <ServicesSection />
+
         {/* ── PROJECTS ────────────────────────────────────────── */}
         <section id="projects" className="py-24 px-6 bg-surface-dark">
           <div className="max-w-6xl mx-auto">
@@ -719,6 +724,9 @@ export default function Home() {
               </FadeIn>
 
             </div>
+
+            {/* ── VERIFICATION & TRUST BLOCK ───────────────────── */}
+            <CertificatesTrustBlock />
           </div>
         </section>
 
