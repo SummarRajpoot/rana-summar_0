@@ -64,6 +64,22 @@ export function AIChatBot() {
     }
   }, [isOpen, messages, isLoading]);
 
+  useEffect(() => {
+    const handleOpenChat = (e: Event) => {
+      const customEvent = e as CustomEvent<{ question?: string }>;
+      setIsOpen(true);
+      if (customEvent.detail?.question) {
+        const q = customEvent.detail.question;
+        setTimeout(() => {
+          handleSend(q);
+        }, 180);
+      }
+    };
+
+    window.addEventListener("open-chat", handleOpenChat);
+    return () => window.removeEventListener("open-chat", handleOpenChat);
+  }, [messages, isLoading]);
+
   const handleCopy = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
     setCopiedId(id);
