@@ -442,7 +442,7 @@ export function ServicesSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
           <FadeIn>
-            <span className="text-accent font-bold tracking-wider uppercase text-xs sm:text-sm mb-3 block">
+            <span className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-heading font-bold tracking-wider text-accent bg-accent/10 border border-accent/30 shadow-[0_0_8px_rgba(201,162,39,0.15)] mb-4">
               SERVICES
             </span>
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground mb-6 tracking-tight">

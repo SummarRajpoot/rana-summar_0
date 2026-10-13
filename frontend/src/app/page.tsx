@@ -6,6 +6,7 @@ import { MySelfSection } from "@/components/MySelfSection";
 import { ContactSection } from "@/components/ContactSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { CertificatesTrustBlock } from "@/components/CertificatesTrustBlock";
+import { ReadStoryHeroButton } from "@/components/ReadStoryHeroButton";
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
@@ -135,7 +136,8 @@ export default function Home() {
               <p className="text-lg md:text-xl text-foreground/80 font-body mb-8 max-w-2xl leading-relaxed">
                 Final-year Software Engineering student. I build AI agents and scalable full-stack applications with Next.js, FastAPI, and LangChain.
               </p>
-              <div className="flex flex-col sm:flex-row flex-wrap items-center gap-3 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row flex-wrap items-center gap-3.5 w-full sm:w-auto">
+                <ReadStoryHeroButton />
                 <Link
                   href="#projects"
                   className="w-full sm:w-auto bg-accent text-foreground px-7 py-3 rounded-full font-semibold hover:brightness-110 transition-all flex items-center justify-center text-sm sm:text-base"
