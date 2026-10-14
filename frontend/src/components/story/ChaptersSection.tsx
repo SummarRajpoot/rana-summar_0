@@ -21,9 +21,12 @@ import {
   Lightbulb,
   Check,
   FileText,
+  Camera,
   type LucideIcon,
 } from "lucide-react";
-import { chapters, StoryChapter, ChapterProof } from "@/data/story";
+import { chapters, StoryChapter, ChapterProof, Media } from "@/data/story";
+import { FlipCard } from "@/components/story/FlipCard";
+import { PhotoGallery } from "@/components/story/PhotoGallery";
 
 const iconMap: Record<string, LucideIcon> = {
   User,
@@ -81,6 +84,23 @@ export function ChaptersSection({ onViewProof }: ChaptersSectionProps) {
             const Icon = iconMap[chapter.iconName] || Sparkles;
             const isOpen = openChapterId === chapter.id;
 
+            const mediaList = Array.isArray(chapter.media)
+              ? chapter.media
+              : chapter.media
+              ? [chapter.media]
+              : [];
+
+            const flipcards = mediaList.filter(
+              (m): m is Extract<Media, { type: "flipcard" }> => m.type === "flipcard"
+            );
+            const photos = mediaList.filter(
+              (m): m is Extract<Media, { type: "photo" | "image" }> =>
+                m.type === "photo" || m.type === "image"
+            );
+
+            const hasDocument = Boolean(chapter.proof || flipcards.length > 0);
+            const hasPhotos = photos.length > 0;
+
             return (
               <motion.div
                 key={chapter.id}
@@ -130,10 +150,18 @@ export function ChaptersSection({ onViewProof }: ChaptersSectionProps) {
                       )}
 
                       {/* Document available badge (never "Verified") */}
-                      {chapter.proof && (
+                      {hasDocument && (
                         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-heading font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-400/30 shadow-[0_0_8px_rgba(52,211,153,0.15)]">
                           <FileText className="w-3 h-3" />
                           <span>Document available</span>
+                        </span>
+                      )}
+
+                      {/* Photos badge */}
+                      {hasPhotos && (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-heading font-semibold text-sky-400 bg-sky-500/10 border border-sky-400/30 shadow-[0_0_8px_rgba(56,189,248,0.15)]">
+                          <Camera className="w-3 h-3" />
+                          <span>Photos</span>
                         </span>
                       )}
                     </div>
@@ -172,7 +200,7 @@ export function ChaptersSection({ onViewProof }: ChaptersSectionProps) {
                       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 sm:px-7 md:px-8 pb-7 sm:pb-8 pt-2 border-t border-white/10 space-y-4 max-w-[68ch]">
+                      <div className="px-6 sm:px-7 md:px-8 pb-7 sm:pb-8 pt-2 border-t border-white/10 space-y-4">
                         {/* Paragraphs */}
                         {chapter.paragraphs.map((para, pIdx) => (
                           <motion.p
@@ -180,7 +208,7 @@ export function ChaptersSection({ onViewProof }: ChaptersSectionProps) {
                             initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3, delay: pIdx * 0.08 }}
-                            className="text-white/85 font-body text-base sm:text-[17px] leading-[1.8]"
+                            className="text-white/85 font-body text-base sm:text-[17px] leading-[1.8] max-w-[68ch]"
                           >
                             {para}
                           </motion.p>
@@ -188,7 +216,7 @@ export function ChaptersSection({ onViewProof }: ChaptersSectionProps) {
 
                         {/* Bullets if present */}
                         {chapter.bullets && chapter.bullets.length > 0 && (
-                          <ul className="space-y-2.5 pt-2">
+                          <ul className="space-y-2.5 pt-2 max-w-[68ch]">
                             {chapter.bullets.map((bullet, bIdx) => (
                               <li
                                 key={bIdx}
@@ -205,7 +233,7 @@ export function ChaptersSection({ onViewProof }: ChaptersSectionProps) {
 
                         {/* What I learned lesson box */}
                         {chapter.lesson && (
-                          <div className="mt-5 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-accent/15 via-accent/10 to-amber-500/10 border border-accent/40 flex items-start gap-3.5 shadow-[0_0_20px_rgba(201,162,39,0.15)]">
+                          <div className="mt-5 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-accent/15 via-accent/10 to-amber-500/10 border border-accent/40 flex items-start gap-3.5 shadow-[0_0_20px_rgba(201,162,39,0.15)] max-w-[68ch]">
                             <div className="w-8 h-8 rounded-xl bg-accent/25 border border-accent/50 flex items-center justify-center text-accent shrink-0 mt-0.5 shadow-sm">
                               <Lightbulb className="w-4.5 h-4.5 text-amber-200" />
                             </div>
@@ -220,21 +248,51 @@ export function ChaptersSection({ onViewProof }: ChaptersSectionProps) {
                           </div>
                         )}
 
-                        {/* View Proof Button (ONLY if proof exists) */}
-                        {chapter.proof && (
-                          <div className="pt-4 flex items-center gap-3">
-                            <button
-                              type="button"
-                              onClick={() => onViewProof(chapter.proof!)}
-                              className="group/proof inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-accent hover:text-surface-dark border border-white/20 hover:border-accent text-white font-heading font-semibold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
-                            >
-                              <FileText className="w-4 h-4 text-accent group-hover/proof:text-surface-dark transition-colors" />
-                              <span>View proof</span>
-                            </button>
+                        {/* Proof & Photos / Media section */}
+                        {(hasDocument || hasPhotos) && (
+                          <div className="pt-3 w-full space-y-4">
+                            {/* FlipCard(s) - top of Proof & Photos area */}
+                            {flipcards.length > 0 && (
+                              <div
+                                className={`w-full ${
+                                  flipcards.length > 1
+                                    ? "flex flex-col md:flex-row items-center justify-center gap-6"
+                                    : "flex justify-center"
+                                }`}
+                              >
+                                {flipcards.map((card, cIdx) => (
+                                  <FlipCard
+                                    key={cIdx}
+                                    front={card.front}
+                                    back={card.back}
+                                    caption={card.caption}
+                                    alt={card.alt}
+                                    orientation={card.orientation}
+                                  />
+                                ))}
+                              </div>
+                            )}
 
-                            <span className="text-xs text-white/45 font-body">
-                              {chapter.proof.title}
-                            </span>
+                            {/* Photo Gallery Thumbnails (with Lightbox Prev/Next) */}
+                            {photos.length > 0 && <PhotoGallery photos={photos} />}
+
+                            {/* View Proof Button (ONLY if proof exists) */}
+                            {chapter.proof && (
+                              <div className="pt-2 flex items-center gap-3">
+                                <button
+                                  type="button"
+                                  onClick={() => onViewProof(chapter.proof!)}
+                                  className="group/proof inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-accent hover:text-surface-dark border border-white/20 hover:border-accent text-white font-heading font-semibold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
+                                >
+                                  <FileText className="w-4 h-4 text-accent group-hover/proof:text-surface-dark transition-colors" />
+                                  <span>View proof</span>
+                                </button>
+
+                                <span className="text-xs text-white/45 font-body">
+                                  {chapter.proof.title}
+                                </span>
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>

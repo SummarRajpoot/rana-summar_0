@@ -43,6 +43,28 @@ export interface ChapterProof {
   caption: string;
 }
 
+export type Media =
+  | {
+      type: "flipcard";
+      orientation?: "landscape" | "portrait";
+      front: string;
+      back: string;
+      caption: string;
+      alt: string;
+    }
+  | {
+      type: "photo";
+      src: string;
+      caption: string;
+      alt: string;
+    }
+  | {
+      type: "image";
+      src: string;
+      caption: string;
+      alt: string;
+    };
+
 export interface StoryChapter {
   id: number;
   numberStr: string;
@@ -53,6 +75,7 @@ export interface StoryChapter {
   bullets?: string[];
   lesson?: string;
   proof?: ChapterProof | null;
+  media?: Media | Media[] | null;
 }
 
 // ============================================================================
@@ -243,6 +266,15 @@ export const chapters: StoryChapter[] = [
       "I started my schooling at APS (ACS). Because of my father's postings, we moved from Bahawalpur to Kohat and then Islamabad. Living in different cities taught me to adapt quickly and meet new people with confidence.",
     ],
     proof: null,
+    media: {
+      type: "flipcard",
+      orientation: "landscape",
+      front: "/story/proofs/aps-student-card-front.jpg",
+      back: "/story/proofs/aps-student-card-back.jpg",
+      caption:
+        "Army Public School & College, Bahawalpur Cantt: student card (name spelled as printed on the card)",
+      alt: "Army Public School student card, front and back",
+    },
   },
   {
     id: 4,
@@ -253,6 +285,14 @@ export const chapters: StoryChapter[] = [
       "We returned to our village, and I joined Government High School Khanqa Dogran. As a child I dreamed of joining the army. Seeing life in different places made me want to learn much more than my surroundings offered.",
     ],
     proof: null,
+    media: {
+      type: "flipcard",
+      orientation: "portrait",
+      front: "/story/proofs/ghs-khanqah-dogran-card-front.jpg",
+      back: "/story/proofs/ghs-khanqah-dogran-card-back.jpg",
+      caption: "Government High School Khanqah Dogran: student card",
+      alt: "Government High School Khanqah Dogran student card, front and back",
+    },
   },
   {
     id: 5,
@@ -276,6 +316,23 @@ export const chapters: StoryChapter[] = [
     ],
     lesson: "I can succeed even in a field I didn't plan for.",
     proof: null,
+    media: [
+      {
+        type: "flipcard",
+        orientation: "landscape",
+        front: "/story/proofs/gct-dae-student-card-front.jpg",
+        back: "/story/proofs/gct-dae-student-card-back.jpg",
+        caption:
+          "Government College of Technology, Faisalabad: DAE Textile student card",
+        alt: "Government College of Technology student card, front and back",
+      },
+      {
+        type: "photo",
+        src: "/story/photos/dae-uniform.jpg",
+        caption: "In the textile lab during my DAE",
+        alt: "Portrait in uniform in the textile lab",
+      },
+    ],
   },
   {
     id: 7,
