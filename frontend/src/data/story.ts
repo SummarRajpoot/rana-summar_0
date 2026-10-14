@@ -304,6 +304,12 @@ export const chapters: StoryChapter[] = [
       "In 2016 I learned to drive a tractor and started helping my baba and chachu on the farm, alongside school. Farm work taught me responsibility early and showed me that real results come from consistent effort.",
     ],
     proof: null,
+    media: {
+      type: "photo",
+      src: "/story/photos/tractor-farm.jpg",
+      caption: "Driving the tractor and helping on the family farm (2016)",
+      alt: "Rana Summar driving a tractor on the family farm",
+    },
   },
   {
     id: 6,
@@ -343,6 +349,12 @@ export const chapters: StoryChapter[] = [
       "After DAE I decided to move into IT. I applied to several universities for Software Engineering, Computer Science and IT. My name appeared on merit lists, but my diploma background stopped me from getting admission in those programs. So I joined NFC in IT and spent a year building my basics.",
     ],
     proof: null,
+    media: {
+      type: "photo",
+      src: "/story/photos/nfc-lab.jpg",
+      caption: "Building computer science basics in the IT lab at NFC Institute",
+      alt: "Working on laptop in NFC IT computer lab",
+    },
   },
   {
     id: 8,
@@ -354,6 +366,12 @@ export const chapters: StoryChapter[] = [
       "A friend invited me to the UAF sports trials, and I had no idea what they would lead to. I ran the 600m race in full heat and secured 1st position among 16 boys. Even though the trials closed and I went back to NFC, that run turned out to be the start of something bigger.",
     ],
     proof: null,
+    media: {
+      type: "photo",
+      src: "/story/photos/sports-uaf.webp",
+      caption: "University of Agriculture Faisalabad sports trial & computing society jersey (#19)",
+      alt: "University of Agriculture Faisalabad sports jersey",
+    },
   },
   {
     id: 9,
@@ -366,6 +384,15 @@ export const chapters: StoryChapter[] = [
     ],
     lesson: "Stay ready, because opportunities don't announce themselves.",
     proof: null,
+    media: {
+      type: "flipcard",
+      orientation: "landscape",
+      front: "/story/proofs/uaf-student-card-front.jpg",
+      back: "/story/proofs/uaf-student-card-back.jpg",
+      caption:
+        "University of Agriculture, Faisalabad: BS Software Engineering student card",
+      alt: "University of Agriculture Faisalabad student card, front and back",
+    },
   },
   {
     id: 10,
@@ -376,6 +403,12 @@ export const chapters: StoryChapter[] = [
       "Alongside my degree, I worked a job from 2023 up to my 6th semester. My grades went up and down, but I never gave up on either study or work. Balancing both made me stronger and more independent.",
     ],
     proof: null,
+    media: {
+      type: "photo",
+      src: "/story/photos/chase-value-uniform.jpg",
+      caption: "In uniform during my retail job at Chase Value while managing engineering studies",
+      alt: "In Chase Value job uniform",
+    },
   },
   {
     id: 11,
@@ -421,6 +454,22 @@ export const chapters: StoryChapter[] = [
       title: "Agentic AI Professional Certificate",
       caption: "Official Saylani Mass IT Training Program certification in Agentic AI and multi-agent workflows.",
     },
+    media: [
+      {
+        type: "flipcard",
+        orientation: "portrait",
+        front: "/story/proofs/smit-agentic-ai-card-front.jpg",
+        back: "/story/proofs/smit-agentic-ai-card-back.jpg",
+        caption: "Saylani Mass IT Training: Agentic AI student card",
+        alt: "Saylani Mass IT Training Agentic AI student card, front and back",
+      },
+      {
+        type: "photo",
+        src: "/story/photos/smit-saylani-group.jpg",
+        caption: "With peers and instructors at Saylani Mass IT Training (SMIT)",
+        alt: "Group photo at Saylani Mass IT Training center",
+      },
+    ],
   },
 ];
 

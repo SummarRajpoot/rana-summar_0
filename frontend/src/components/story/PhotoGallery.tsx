@@ -122,10 +122,10 @@ export function PhotoGallery({ photos, className = "" }: PhotoGalleryProps) {
 
       {/* Thumbnails Grid */}
       <div
-        className={`grid gap-3 sm:gap-4 w-full ${
+        className={`grid gap-4 sm:gap-6 w-full ${
           validPhotos.length === 1
-            ? "max-w-xs mx-auto grid-cols-1"
-            : "max-w-lg mx-auto grid-cols-2"
+            ? "max-w-[340px] sm:max-w-[360px] mx-auto grid-cols-1"
+            : "max-w-2xl mx-auto grid-cols-1 sm:grid-cols-2"
         }`}
       >
         {validPhotos.map((photo, idx) => (
@@ -134,32 +134,44 @@ export function PhotoGallery({ photos, className = "" }: PhotoGalleryProps) {
             type="button"
             onClick={() => handleOpen(idx)}
             aria-label={`View photo: ${photo.caption || photo.alt}`}
-            className="group relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 hover:border-accent/60 bg-[#120f0a] shadow-md transition-all hover:scale-[1.02] cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="group relative flex flex-col rounded-2xl overflow-hidden border border-white/10 hover:border-accent/60 bg-gradient-to-b from-[#16120b] to-[#0e0c08] shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-300 hover:shadow-[0_15px_40px_rgba(201,162,39,0.18)] hover:scale-[1.01] cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              loading="lazy"
-              sizes="(max-width: 640px) 50vw, 260px"
-              placeholder="blur"
-              blurDataURL={BLUR_PLACEHOLDER}
-              onError={() => handleImageError(photo.src)}
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            {/* Image Box */}
+            <div className="relative w-full aspect-[4/5] overflow-hidden bg-black/60 flex items-center justify-center">
+              {/* Subtle Ambient Blurred Backdrop */}
+              <Image
+                src={photo.src}
+                alt=""
+                fill
+                aria-hidden="true"
+                className="object-cover blur-2xl opacity-20 scale-125 pointer-events-none"
+              />
 
-            {/* Gradient Overlay for Caption */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
+              {/* Full Uncropped Photo (same as open modal view) */}
+              <div className="relative w-full h-full p-2.5 flex items-center justify-center">
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 640px) 90vw, 360px"
+                  placeholder="blur"
+                  blurDataURL={BLUR_PLACEHOLDER}
+                  onError={() => handleImageError(photo.src)}
+                  className="object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.7)] transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
 
-            {/* Zoom Icon in Top-Right on Hover */}
-            <div className="absolute top-2 right-2 w-7 h-7 rounded-lg bg-black/60 backdrop-blur-md border border-white/15 text-white/80 group-hover:text-accent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <ZoomIn className="w-3.5 h-3.5" />
+              {/* Zoom Icon in Top-Right on Hover */}
+              <div className="absolute top-2.5 right-2.5 w-7 h-7 rounded-lg bg-black/70 backdrop-blur-md border border-white/15 text-white/80 group-hover:text-accent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-md">
+                <ZoomIn className="w-3.5 h-3.5" />
+              </div>
             </div>
 
-            {/* Caption in bottom */}
+            {/* Clean Caption Bar Under Image */}
             {photo.caption && (
-              <div className="absolute bottom-2 left-2 right-2">
-                <p className="text-[11px] font-body text-white/90 truncate leading-snug">
+              <div className="w-full px-3.5 py-2.5 bg-[#120f0a] border-t border-white/10 flex items-center justify-center">
+                <p className="text-xs font-body text-white/85 text-center leading-relaxed line-clamp-2">
                   {photo.caption}
                 </p>
               </div>

@@ -24,7 +24,7 @@ import {
   Camera,
   type LucideIcon,
 } from "lucide-react";
-import { chapters, StoryChapter, ChapterProof, Media } from "@/data/story";
+import { chapters, ChapterProof, Media } from "@/data/story";
 import { FlipCard } from "@/components/story/FlipCard";
 import { PhotoGallery } from "@/components/story/PhotoGallery";
 
