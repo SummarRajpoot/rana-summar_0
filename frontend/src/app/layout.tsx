@@ -23,7 +23,7 @@ const seoDescription =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Rana Summar | Full-Stack AI Developer — Portfolio",
+  title: "Rana Summar | Full-Stack AI Developer",
   description: seoDescription,
   applicationName: "Rana Summar",
   keywords: [
@@ -38,8 +38,6 @@ export const metadata: Metadata = {
     "LangChain developer",
     "AI agents",
     "freelance developer Pakistan",
-    "Rana Summar portfolio",
-    "Summar Rajpoot portfolio",
   ],
   authors: [{ name: "Rana Summar", url: SITE_URL }],
   creator: "Rana Summar",
@@ -90,7 +88,7 @@ const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Rana Summar",
-  alternateName: ["Rana Summar Portfolio", "Summar Rajpoot", "Rana Summar Rajpoot"],
+  alternateName: ["Summar Rajpoot", "Rana Summar Rajpoot"],
   url: SITE_URL,
 };
 

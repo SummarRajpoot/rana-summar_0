@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { STRICT_SYSTEM_PROMPT } from "@/config/portfolioKnowledge";
+import { STRICT_SYSTEM_PROMPT } from "@/config/knowledgeBase";
 
 interface ChatMessage {
   role: "user" | "model" | "assistant";

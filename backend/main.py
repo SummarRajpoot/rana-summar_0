@@ -30,7 +30,7 @@ async def lifespan(app: FastAPI):
     close_client()
 
 
-app = FastAPI(title="Portfolio API", lifespan=lifespan)
+app = FastAPI(title="Rana Summar API", lifespan=lifespan)
 
 # ── CORS Configuration ────────────────────────────────────────────────────────
 default_origins = [
@@ -527,10 +527,10 @@ async def submit_contact(payload: ContactCreate):
         msg["From"] = gmail_address
         msg["To"] = gmail_address
         msg["Reply-To"] = payload.email.strip()
-        msg["Subject"] = f"[Portfolio Contact] {payload.subject.strip()}"
+        msg["Subject"] = f"[Website Contact] {payload.subject.strip()}"
 
         body = (
-            f"New Portfolio Contact Form Submission\n\n"
+            f"New Website Contact Form Submission\n\n"
             f"Name: {payload.first_name.strip()} {payload.last_name.strip()}\n"
             f"Email: {payload.email.strip()}\n"
             f"Subject: {payload.subject.strip()}\n\n"

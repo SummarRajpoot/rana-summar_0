@@ -1,6 +1,6 @@
-# Portfolio Project
+# Rana Summar — Personal Website
 
-A modern portfolio application featuring a Next.js (React 19, Tailwind CSS, Framer Motion) frontend and a FastAPI (Python, Motor / MongoDB) backend.
+A modern full-stack application featuring a Next.js (React 19, Tailwind CSS, Framer Motion) frontend and a FastAPI (Python, Motor / MongoDB) backend.
 
 ---
 
@@ -87,7 +87,7 @@ npm run dev
 1. Create a new Space on [Hugging Face](https://huggingface.co/spaces).
 2. Choose **Docker SDK** (Blank / Existing Dockerfile).
 ## 🌐 Connect with me
-- 🔗 Portfolio: [ranasummar.vercel.app](https://ranasummar.vercel.app/)
+- 🔗 Website: [ranasummar.vercel.app](https://ranasummar.vercel.app/)
 - 💼 LinkedIn: [Rana Summar](https://www.linkedin.com/in/rana-summar-295a1a262)](#)
 3. Push the contents of the `backend/` directory or connect your repository.
 4. Add **Repository Secrets** in HF Space Settings:

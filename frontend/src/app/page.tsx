@@ -449,7 +449,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <FadeIn>
               <span className="text-accent font-bold tracking-wider uppercase text-sm mb-3 block text-center">
-                Portfolio
+                Featured Work
               </span>
               <h2 className="text-3xl md:text-5xl font-bold font-heading text-white mb-16 text-center">
                 Featured Projects

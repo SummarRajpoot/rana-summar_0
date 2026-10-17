@@ -56,7 +56,7 @@ export function AskMyAISection() {
         {/* Hint footer */}
         <div className="mt-8 text-center flex items-center justify-center gap-2 text-xs font-body text-white/50">
           <MessageSquare className="w-3.5 h-3.5 text-accent" />
-          <span>Powered by Summar AI — grounded directly in my real resume and portfolio knowledge.</span>
+          <span>Powered by Summar AI — grounded directly in my real resume and project knowledge.</span>
         </div>
       </div>
     </section>

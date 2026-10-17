@@ -56,7 +56,7 @@ export const servicesData: ServiceItem[] = [
     title: "AI Chatbots for Business",
     tagline: "Let's scope it",
     description:
-      "Custom website and support chatbots trained on your own content, like the AI assistant running on this portfolio.",
+      "Custom website and support chatbots trained on your own content, like the AI assistant running on this website.",
     included: [
       "Chat widget for any website (Next.js / React)",
       "Answers grounded in your FAQs, docs and PDFs",
@@ -156,7 +156,7 @@ export const servicesData: ServiceItem[] = [
     included: [
       "Python, web development and AI fundamentals",
       "Final-year project guidance",
-      "GitHub, portfolio and CV review",
+      "GitHub, projects and CV review",
       "Personalised learning roadmap",
       "Code reviews and feedback",
     ],

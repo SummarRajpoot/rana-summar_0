@@ -85,7 +85,7 @@ export function StoryPageContent() {
                 className="group inline-flex items-center gap-2 text-sm font-heading font-semibold text-white/70 hover:text-accent transition-colors"
               >
                 <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-                <span>Back to portfolio</span>
+                <span>Back to home</span>
               </Link>
             </motion.div>
 

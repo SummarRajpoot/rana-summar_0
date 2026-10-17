@@ -43,7 +43,7 @@ export function AIChatBot() {
       id: "welcome-1",
       role: "assistant",
       content:
-        "👋 **Hi! I'm Summar AI**, Rana Summar's official portfolio assistant.\n\nI can answer anything about Rana's **CV, technical skills, AI projects, certifications, work experience, and hiring details**.\n\nHow can I help you today?",
+        "👋 **Hi! I'm Summar AI**, Rana Summar's official AI assistant.\n\nI can answer anything about Rana's **CV, technical skills, AI projects, certifications, work experience, and hiring details**.\n\nHow can I help you today?",
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     },
   ]);
@@ -317,7 +317,7 @@ export function AIChatBot() {
                   <div className="flex items-center gap-2">
                     <h3 className="font-heading font-bold text-white text-base">Summar AI</h3>
                     <span className="text-[10px] font-semibold bg-accent/20 text-accent px-2 py-0.5 rounded-full border border-accent/30 uppercase tracking-wider">
-                      Portfolio Bot
+                      AI Assistant
                     </span>
                   </div>
                   <p className="text-xs text-white/50">Verified CV &amp; Projects Assistant</p>
