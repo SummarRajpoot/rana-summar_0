@@ -127,20 +127,20 @@ export default function Home() {
         <section id="home" className="min-h-screen flex items-center justify-center bg-background px-6 pt-24 pb-20">
           <FadeIn className="w-full max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-20">
             <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
-              <span className="text-accent font-bold tracking-wider uppercase text-sm mb-3">
-                Full-Stack AI Software Engineer
-              </span>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading text-foreground mb-6">
+              <p className="font-body font-semibold text-[0.75rem] uppercase tracking-[0.22em] text-[var(--gold-text)] mb-4">
+                FULL-STACK AI DEVELOPER
+              </p>
+              <h1 className="font-heading font-bold text-[clamp(2.75rem,7.5vw,5rem)] leading-[1.02] tracking-[-0.035em] text-[var(--ink)] [text-wrap:balance] mb-6">
                 Rana Summar
               </h1>
-              <p className="text-lg md:text-xl text-foreground/80 font-body mb-8 max-w-2xl leading-relaxed">
-                Final-year Software Engineering student. I build AI agents and scalable full-stack applications with Next.js, FastAPI, and LangChain.
+              <p className="font-body font-normal text-[clamp(1.0625rem,1.6vw,1.25rem)] leading-[1.65] text-[var(--ink-soft)] max-w-[38rem] [text-wrap:pretty] mb-9">
+                Final-year BS Software Engineering student at the University of Agriculture, Faisalabad, and freelance Full-Stack AI Developer. I design, build and deploy AI agents and full-stack web applications with <strong className="font-semibold text-[var(--ink)]">Next.js</strong>, <strong className="font-semibold text-[var(--ink)]">FastAPI</strong>, <strong className="font-semibold text-[var(--ink)]">LangChain</strong> and <strong className="font-semibold text-[var(--ink)]">LangGraph</strong>.
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap items-center gap-3.5 w-full sm:w-auto">
                 <ReadStoryHeroButton />
                 <Link
                   href="#projects"
-                  className="w-full sm:w-auto bg-accent text-foreground px-7 py-3 rounded-full font-semibold hover:brightness-110 transition-all flex items-center justify-center text-sm sm:text-base"
+                  className="w-full sm:w-auto bg-accent text-foreground px-7 py-3 rounded-full font-body font-semibold text-[0.9375rem] tracking-[0.01em] hover:brightness-110 transition-all flex items-center justify-center"
                 >
                   View Projects
                 </Link>
@@ -148,7 +148,7 @@ export default function Home() {
                   href="https://www.fiverr.com/rana_summar"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto border-2 border-foreground text-foreground px-6 py-3 rounded-full font-semibold hover:bg-foreground hover:text-background transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
+                  className="w-full sm:w-auto border-2 border-foreground text-foreground px-6 py-3 rounded-full font-body font-semibold text-[0.9375rem] tracking-[0.01em] hover:bg-foreground hover:text-background transition-colors flex items-center justify-center gap-2"
                 >
                   <FiverrIcon className="w-4 h-4 shrink-0" />
                   <span>Hire Me on Fiverr</span>
@@ -157,7 +157,7 @@ export default function Home() {
                   href="https://www.upwork.com/freelancers/ranasummar"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto border-2 border-foreground text-foreground px-6 py-3 rounded-full font-semibold hover:bg-foreground hover:text-background transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
+                  className="w-full sm:w-auto border-2 border-foreground text-foreground px-6 py-3 rounded-full font-body font-semibold text-[0.9375rem] tracking-[0.01em] hover:bg-foreground hover:text-background transition-colors flex items-center justify-center gap-2"
                 >
                   <UpworkIcon className="w-4 h-4 shrink-0" />
                   <span>Hire Me on Upwork</span>
@@ -169,7 +169,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 download
-                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-foreground group transition-colors"
+                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-foreground group transition-colors"
               >
                 <svg
                   className="w-4 h-4 text-foreground/80 group-hover:text-accent transition-colors shrink-0"
@@ -188,6 +188,14 @@ export default function Home() {
                   Download CV
                 </span>
               </a>
+
+              <div className="mt-7 flex flex-wrap items-center justify-center md:justify-start gap-x-3.5 gap-y-2 font-body font-medium text-[0.8125rem] tracking-[0.02em] text-[var(--ink-muted)]">
+                <span>Hafizabad, Pakistan</span>
+                <span className="hidden sm:inline-block w-px h-3.5 bg-[rgba(10,10,10,0.15)]" aria-hidden="true" />
+                <span>Freelance on Fiverr</span>
+                <span className="hidden sm:inline-block w-px h-3.5 bg-[rgba(10,10,10,0.15)]" aria-hidden="true" />
+                <span>BS Software Engineering, UAF</span>
+              </div>
             </div>
 
             {/* Profile Photo */}

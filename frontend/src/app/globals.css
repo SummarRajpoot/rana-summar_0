@@ -6,8 +6,20 @@
   --color-accent: #C9A227;
   --color-surface-dark: #111111;
 
+  --color-gold-text: #8C6D0F;
+  --color-ink: #0A0A0A;
+  --color-ink-soft: #4A4A46;
+  --color-ink-muted: #6B6B66;
+
   --font-heading: var(--font-heading), sans-serif;
   --font-body: var(--font-body), sans-serif;
+}
+
+:root {
+  --gold-text: #8C6D0F;
+  --ink: #0A0A0A;
+  --ink-soft: #4A4A46;
+  --ink-muted: #6B6B66;
 }
 
 body {
