@@ -114,7 +114,6 @@ export function AIChatBot() {
     setIsLoading(true);
 
     try {
-      // Build history for API
       const history = messages
         .filter((m) => m.id !== "welcome-1")
         .map((m) => ({
@@ -160,13 +159,10 @@ export function AIChatBot() {
     }
   };
 
-  // Helper to format basic markdown (bold, links, code, lists)
   const formatMarkdown = (content: string) => {
-    // Break into lines
     const lines = content.split("\n");
 
     return lines.map((line, lineIndex) => {
-      // Parse markdown links [text](url)
       const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
       const parts = [];
       let lastIndex = 0;
@@ -182,7 +178,7 @@ export function AIChatBot() {
             href={match[2]}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-accent underline underline-offset-2 hover:brightness-125 inline-flex items-center gap-0.5 font-medium"
+            className="text-[#4FD1C5] underline underline-offset-2 hover:text-[#B5F5EC] inline-flex items-center gap-0.5 font-medium"
           >
             {match[1]}
             <ExternalLink className="w-3 h-3 ml-0.5 inline opacity-80" />
@@ -194,7 +190,6 @@ export function AIChatBot() {
         parts.push(line.substring(lastIndex));
       }
 
-      // Convert **bold** inside text parts
       const processedParts = parts.map((part, partIdx) => {
         if (typeof part !== "string") return part;
 
@@ -202,7 +197,7 @@ export function AIChatBot() {
         return boldParts.map((bPart, bIdx) => {
           if (bPart.startsWith("**") && bPart.endsWith("**")) {
             return (
-              <strong key={`b-${bIdx}`} className="font-bold text-white">
+              <strong key={`b-${bIdx}`} className="font-bold text-[#F7F5F0]">
                 {bPart.slice(2, -2)}
               </strong>
             );
@@ -211,7 +206,7 @@ export function AIChatBot() {
             return (
               <code
                 key={`c-${bIdx}`}
-                className="bg-white/10 px-1.5 py-0.5 rounded text-xs font-mono text-accent"
+                className="bg-[#16203A] px-1.5 py-0.5 rounded text-xs font-mono text-[#B5F5EC] border border-[#4FD1C5]/20"
               >
                 {bPart.slice(1, -1)}
               </code>
@@ -221,20 +216,18 @@ export function AIChatBot() {
         });
       });
 
-      // Handle Bullet Points
       if (line.trim().startsWith("- ") || line.trim().startsWith("* ")) {
         return (
           <div key={`line-${lineIndex}`} className="flex items-start gap-2 my-1 pl-1">
-            <span className="text-accent text-xs mt-1.5">•</span>
-            <span className="flex-1 text-white/90">{processedParts}</span>
+            <span className="text-[#4FD1C5] text-xs mt-1.5">•</span>
+            <span className="flex-1 text-[#C9D1E3]">{processedParts}</span>
           </div>
         );
       }
 
-      // Handle Headings (###)
       if (line.trim().startsWith("### ")) {
         return (
-          <h4 key={`line-${lineIndex}`} className="text-base font-bold text-accent mt-3 mb-1 font-heading">
+          <h4 key={`line-${lineIndex}`} className="text-base font-bold text-[#B5F5EC] mt-3 mb-1 font-heading">
             {line.replace("### ", "")}
           </h4>
         );
@@ -245,7 +238,7 @@ export function AIChatBot() {
       }
 
       return (
-        <p key={`line-${lineIndex}`} className="my-1 text-white/90 leading-relaxed">
+        <p key={`line-${lineIndex}`} className="my-1 text-[#C9D1E3] leading-relaxed">
           {processedParts}
         </p>
       );
@@ -263,13 +256,13 @@ export function AIChatBot() {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 20, scale: 0.9 }}
               onClick={() => setIsOpen(true)}
-              className="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-dark/95 backdrop-blur-md border border-accent/40 text-white shadow-xl hover:border-accent cursor-pointer group transition-all"
+              className="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-full surface-card border border-[#4FD1C5]/40 text-[#F7F5F0] shadow-[0_8px_30px_rgba(10,18,34,0.6)] hover:border-[#4FD1C5] cursor-pointer group transition-all"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span className="text-xs font-medium text-white/90 group-hover:text-accent transition-colors">
+              <span className="w-2 h-2 rounded-full bg-[#4FD1C5] animate-ping" />
+              <span className="text-xs font-medium text-[#F7F5F0] group-hover:text-[#B5F5EC] transition-colors">
                 Chat with Summar AI
               </span>
-              <Sparkles className="w-3.5 h-3.5 text-accent group-hover:rotate-12 transition-transform" />
+              <Sparkles className="w-3.5 h-3.5 text-[#4FD1C5] group-hover:rotate-12 transition-transform" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -279,14 +272,14 @@ export function AIChatBot() {
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Close AI Chat" : "Open AI Chat"}
-          className="relative w-14 h-14 rounded-full bg-surface-dark border-2 border-accent/60 shadow-[0_0_25px_rgba(201,162,39,0.35)] flex items-center justify-center text-accent hover:border-accent hover:shadow-[0_0_35px_rgba(201,162,39,0.55)] transition-all cursor-pointer focus:outline-none"
+          className="relative w-14 h-14 rounded-full surface-card border-2 border-[#4FD1C5]/60 shadow-[0_0_25px_rgba(79,209,197,0.35)] flex items-center justify-center text-[#4FD1C5] hover:border-[#4FD1C5] hover:shadow-[0_0_35px_rgba(79,209,197,0.6)] transition-all cursor-pointer focus:outline-none"
         >
           {isOpen ? (
-            <X className="w-6 h-6 text-white" />
+            <X className="w-6 h-6 text-[#F7F5F0]" />
           ) : (
             <>
-              <Bot className="w-7 h-7 text-accent" />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-surface-dark rounded-full" />
+              <Bot className="w-7 h-7 text-[#4FD1C5]" />
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#4FD1C5] border-2 border-[#1B2745] rounded-full shadow-[0_0_6px_#4FD1C5]" />
             </>
           )}
         </motion.button>
@@ -296,31 +289,32 @@ export function AIChatBot() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.95 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className={`fixed bottom-24 right-4 sm:right-6 z-50 bg-[#121212]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden transition-all duration-300 ${
+            initial={{ opacity: 0, scale: 0.85, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.85, y: 20 }}
+            style={{ transformOrigin: "bottom right" }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            className={`fixed bottom-24 right-4 sm:right-6 z-50 bg-[#1F2D52]/95 backdrop-blur-2xl border border-[#4FD1C5]/30 rounded-[20px] shadow-[0_20px_60px_rgba(10,18,34,0.8)] flex flex-col overflow-hidden transition-all duration-300 ${
               isExpanded
                 ? "w-[calc(100vw-2rem)] sm:w-[680px] h-[85vh] max-h-[750px]"
                 : "w-[calc(100vw-2rem)] sm:w-[410px] h-[600px] max-h-[80vh]"
             }`}
           >
             {/* Header */}
-            <div className="px-5 py-4 bg-white/[0.03] border-b border-white/10 flex items-center justify-between">
+            <div className="px-5 py-4 bg-[#293962]/90 border-b border-[#4FD1C5]/20 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="relative w-10 h-10 rounded-full bg-accent/15 border border-accent/40 flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-accent" />
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-surface-dark rounded-full" />
+                <div className="relative w-10 h-10 rounded-full bg-[#16203A] border border-[#4FD1C5]/40 flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-[#4FD1C5]" />
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#4FD1C5] border-2 border-[#1B2745] rounded-full" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-heading font-bold text-white text-base">Summar AI</h3>
-                    <span className="text-[10px] font-semibold bg-accent/20 text-accent px-2 py-0.5 rounded-full border border-accent/30 uppercase tracking-wider">
+                    <h3 className="font-heading font-bold text-[#F7F5F0] text-base">Summar AI</h3>
+                    <span className="text-[10px] font-semibold bg-[#4FD1C5]/20 text-[#B5F5EC] px-2 py-0.5 rounded-full border border-[#4FD1C5]/30 uppercase tracking-wider">
                       AI Assistant
                     </span>
                   </div>
-                  <p className="text-xs text-white/50">Verified CV &amp; Projects Assistant</p>
+                  <p className="text-xs text-[#AEB8D0]">Verified CV &amp; Projects Assistant</p>
                 </div>
               </div>
 
@@ -328,21 +322,21 @@ export function AIChatBot() {
                 <button
                   onClick={handleClear}
                   title="Clear conversation"
-                  className="p-2 text-white/60 hover:text-rose-400 hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
+                  className="p-2 text-[#AEB8D0] hover:text-rose-400 hover:bg-[#16203A] rounded-lg transition-colors cursor-pointer"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
                   title={isExpanded ? "Collapse view" : "Expand view"}
-                  className="hidden sm:flex p-2 text-white/60 hover:text-accent hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
+                  className="hidden sm:flex p-2 text-[#AEB8D0] hover:text-[#4FD1C5] hover:bg-[#16203A] rounded-lg transition-colors cursor-pointer"
                 >
                   {isExpanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
                   title="Close chat"
-                  className="p-2 text-white/60 hover:text-white hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
+                  className="p-2 text-[#AEB8D0] hover:text-[#F7F5F0] hover:bg-[#16203A] rounded-lg transition-colors cursor-pointer"
                 >
                   <ChevronDown className="w-5 h-5" />
                 </button>
@@ -356,19 +350,20 @@ export function AIChatBot() {
                   key={msg.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
                   className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {msg.role === "assistant" && (
-                    <div className="w-8 h-8 rounded-full bg-accent/15 border border-accent/40 flex items-center justify-center shrink-0 mt-0.5">
-                      <Bot className="w-4 h-4 text-accent" />
+                    <div className="w-8 h-8 rounded-full bg-[#16203A] border border-[#4FD1C5]/40 flex items-center justify-center shrink-0 mt-0.5">
+                      <Bot className="w-4 h-4 text-[#4FD1C5]" />
                     </div>
                   )}
 
                   <div
                     className={`group relative max-w-[85%] rounded-2xl px-4 py-3 border shadow-sm ${
                       msg.role === "user"
-                        ? "bg-accent text-black font-medium border-accent/80 rounded-tr-xs"
-                        : "bg-white/[0.05] border-white/10 text-white rounded-tl-xs"
+                        ? "btn-primary-luxury text-[#1B2745] font-semibold border-[#4FD1C5] rounded-tr-xs"
+                        : "bg-[#212F54] border-[#4FD1C5]/20 text-[#F7F5F0] rounded-tl-xs"
                     }`}
                   >
                     {msg.role === "assistant" ? (
@@ -376,23 +371,23 @@ export function AIChatBot() {
                         {formatMarkdown(msg.content)}
                       </div>
                     ) : (
-                      <p className="whitespace-pre-wrap leading-relaxed text-xs sm:text-sm text-foreground">
+                      <p className="whitespace-pre-wrap leading-relaxed text-xs sm:text-sm">
                         {msg.content}
                       </p>
                     )}
 
-                    <div className="flex items-center justify-between gap-3 mt-1.5 pt-1 border-t border-white/5 text-[10px] text-white/40">
+                    <div className="flex items-center justify-between gap-3 mt-1.5 pt-1 border-t border-[#4FD1C5]/10 text-[10px] text-[#AEB8D0]">
                       <span>{msg.timestamp}</span>
                       {msg.role === "assistant" && (
                         <button
                           onClick={() => handleCopy(msg.content, msg.id)}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 hover:text-accent cursor-pointer"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 hover:text-[#4FD1C5] cursor-pointer"
                           title="Copy response"
                         >
                           {copiedId === msg.id ? (
                             <>
-                              <Check className="w-3 h-3 text-emerald-400" />
-                              <span className="text-emerald-400">Copied</span>
+                              <Check className="w-3 h-3 text-[#4FD1C5]" />
+                              <span className="text-[#4FD1C5]">Copied</span>
                             </>
                           ) : (
                             <>
@@ -406,29 +401,29 @@ export function AIChatBot() {
                   </div>
 
                   {msg.role === "user" && (
-                    <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center shrink-0 mt-0.5">
-                      <User className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 rounded-full bg-[#293962] border border-[#4FD1C5]/30 flex items-center justify-center shrink-0 mt-0.5">
+                      <User className="w-4 h-4 text-[#F7F5F0]" />
                     </div>
                   )}
                 </motion.div>
               ))}
 
-              {/* Typing / Thinking Indicator */}
+              {/* Typing Indicator with 3 Bouncing Teal Dots */}
               {isLoading && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="flex gap-3 justify-start"
                 >
-                  <div className="w-8 h-8 rounded-full bg-accent/15 border border-accent/40 flex items-center justify-center shrink-0 mt-0.5">
-                    <Bot className="w-4 h-4 text-accent" />
+                  <div className="w-8 h-8 rounded-full bg-[#16203A] border border-[#4FD1C5]/40 flex items-center justify-center shrink-0 mt-0.5">
+                    <Bot className="w-4 h-4 text-[#4FD1C5]" />
                   </div>
-                  <div className="bg-white/[0.05] border border-white/10 rounded-2xl rounded-tl-xs px-4 py-3 flex items-center gap-2">
-                    <span className="text-xs text-white/60">Summar AI is thinking</span>
-                    <div className="flex gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce [animation-delay:-0.3s]" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce [animation-delay:-0.15s]" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-bounce" />
+                  <div className="bg-[#212F54] border border-[#4FD1C5]/20 rounded-2xl rounded-tl-xs px-4 py-3 flex items-center gap-2">
+                    <span className="text-xs text-[#AEB8D0]">Summar AI is thinking</span>
+                    <div className="flex gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-[#4FD1C5] animate-bounce [animation-delay:-0.3s]" />
+                      <span className="w-2 h-2 rounded-full bg-[#4FD1C5] animate-bounce [animation-delay:-0.15s]" />
+                      <span className="w-2 h-2 rounded-full bg-[#4FD1C5] animate-bounce" />
                     </div>
                   </div>
                 </motion.div>
@@ -437,15 +432,15 @@ export function AIChatBot() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Quick Starter Chips */}
+            {/* Starter Prompts */}
             {messages.length <= 2 && (
-              <div className="px-4 py-2 border-t border-white/5 bg-black/20 flex items-center gap-2 overflow-x-auto no-scrollbar">
+              <div className="px-4 py-2 border-t border-[#4FD1C5]/10 bg-[#16203A]/70 flex items-center gap-2 overflow-x-auto no-scrollbar">
                 {STARTER_PROMPTS.map((item, idx) => (
                   <button
                     key={idx}
                     disabled={isLoading}
                     onClick={() => handleSend(item.prompt)}
-                    className="shrink-0 text-xs px-3 py-1.5 rounded-full bg-white/5 hover:bg-accent/15 hover:border-accent/40 border border-white/10 text-white/80 hover:text-accent transition-all cursor-pointer flex items-center gap-1.5"
+                    className="shrink-0 text-xs px-3 py-1.5 rounded-full bg-[#212F54] hover:bg-[#4FD1C5]/15 hover:border-[#4FD1C5]/50 border border-[#4FD1C5]/20 text-[#C9D1E3] hover:text-[#B5F5EC] transition-all cursor-pointer flex items-center gap-1.5"
                   >
                     <span>{item.label}</span>
                     <ArrowRight className="w-3 h-3 opacity-60" />
@@ -460,7 +455,7 @@ export function AIChatBot() {
                 e.preventDefault();
                 handleSend();
               }}
-              className="p-3 bg-white/[0.02] border-t border-white/10 flex items-center gap-2"
+              className="p-3 bg-[#1F2D52] border-t border-[#4FD1C5]/20 flex items-center gap-2"
             >
               <input
                 ref={inputRef}
@@ -469,12 +464,12 @@ export function AIChatBot() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about Rana's CV, skills, projects..."
                 disabled={isLoading}
-                className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-accent transition-colors"
+                className="flex-1 bg-[#16203A] border border-[#4FD1C5]/20 rounded-xl px-4 py-3 text-sm text-[#F7F5F0] placeholder-[#AEB8D0]/40 focus:outline-none focus:border-[#4FD1C5] focus:ring-1 focus:ring-[#4FD1C5]/30 transition-colors"
               />
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="w-11 h-11 rounded-xl bg-accent text-foreground flex items-center justify-center hover:brightness-110 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer shrink-0"
+                className="w-11 h-11 rounded-xl btn-primary-luxury text-[#1B2745] flex items-center justify-center hover:brightness-110 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer shrink-0"
               >
                 <Send className="w-4 h-4" />
               </button>

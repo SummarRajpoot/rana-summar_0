@@ -1,51 +1,183 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #FAFAF9;
-  --color-foreground: #0A0A0A;
-  --color-accent: #C9A227;
-  --color-surface-dark: #111111;
+  --color-bg: #1B2745;
+  --color-bg-start: #1F2D52;
+  --color-bg-end: #16203A;
+  --color-surface-start: #293962;
+  --color-surface-end: #212F54;
+  --color-panel: #2C3D6C;
+  --color-band: #141D35;
+  --color-placeholder: #33426F;
+  --color-accent: #4FD1C5;
+  --color-accent-light: #B5F5EC;
+  --color-accent-deep: #2BB3A8;
+  --color-ink: #F7F5F0;
+  --color-muted: #C9D1E3;
+  --color-muted-2: #AEB8D0;
+  --color-glow-blue: #4A6FB8;
 
-  --color-gold-text: #8C6D0F;
-  --color-ink: #0A0A0A;
-  --color-ink-soft: #4A4A46;
-  --color-ink-muted: #6B6B66;
+  --color-background: #1B2745;
+  --color-foreground: #F7F5F0;
+  --color-surface-dark: #212F54;
 
-  --font-heading: var(--font-heading), sans-serif;
-  --font-body: var(--font-body), sans-serif;
+  --font-heading: var(--font-heading), "Playfair Display", Georgia, serif;
+  --font-body: var(--font-body), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 :root {
-  --gold-text: #8C6D0F;
-  --ink: #0A0A0A;
-  --ink-soft: #4A4A46;
-  --ink-muted: #6B6B66;
+  --bg: #1B2745;
+  --bg-start: #1F2D52;
+  --bg-end: #16203A;
+  --surface-start: #293962;
+  --surface-end: #212F54;
+  --panel: #2C3D6C;
+  --band: #141D35;
+  --placeholder: #33426F;
+  --accent: #4FD1C5;
+  --accent-light: #B5F5EC;
+  --accent-deep: #2BB3A8;
+  --ink: #F7F5F0;
+  --muted: #C9D1E3;
+  --muted-2: #AEB8D0;
+  --glow-blue: #4A6FB8;
+
+  --ease-entrance: cubic-bezier(0.22, 0.7, 0.2, 1);
+  --ease-transition: cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+@property --a {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--ink);
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-foreground);
+  background: linear-gradient(180deg, #1F2D52 0%, #16203A 100%);
+  background-attachment: fixed;
+  color: var(--ink);
   font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  font-weight: 700;
+/* Page background dotted grid */
+.bg-luxury-dots {
+  background-image: radial-gradient(rgba(79, 209, 197, 0.06) 1.5px, transparent 1.5px);
+  background-size: 34px 34px;
 }
 
-/* Custom Scrollbar for AI Chatbot */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
+/* Surface card styling */
+.surface-card {
+  background: linear-gradient(145deg, #293962 0%, #212F54 100%);
+  border: 1px solid rgba(79, 209, 197, 0.22);
 }
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
+
+.panel-block {
+  background-color: #2C3D6C;
+  border: 1px solid rgba(79, 209, 197, 0.18);
 }
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(201, 162, 39, 0.3);
+
+/* Shimmer animated gradient for italic accent words */
+@keyframes shimmerAnim {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.accent-shimmer {
+  background: linear-gradient(90deg, #4FD1C5 0%, #B5F5EC 40%, #4FD1C5 80%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerAnim 5s linear infinite;
+}
+
+/* Conic gradient border animation */
+@keyframes rotateBorder {
+  0% {
+    --a: 0deg;
+  }
+  100% {
+    --a: 360deg;
+  }
+}
+
+.conic-border-glow {
+  background: conic-gradient(from var(--a), #4FD1C5, #2BB3A8, transparent 45%, #B5F5EC 65%, transparent 80%, #4FD1C5);
+  animation: rotateBorder 6s linear infinite;
+}
+
+/* Moving primary button gradient */
+@keyframes primaryButtonGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.btn-primary-luxury {
+  background: linear-gradient(90deg, #2BB3A8 0%, #B5F5EC 50%, #2BB3A8 100%);
+  background-size: 200% 100%;
+  color: #1B2745;
+  font-weight: 600;
+  box-shadow: 0 0 20px rgba(79, 209, 197, 0.25);
+  animation: primaryButtonGlow 6s ease infinite;
+}
+
+.btn-primary-luxury:hover {
+  box-shadow: 0 0 28px rgba(181, 245, 236, 0.45);
+}
+
+/* Eyebrow label with small teal line */
+.eyebrow-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: #4FD1C5;
+}
+
+.eyebrow-label::before {
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5px;
+  background-color: #4FD1C5;
   border-radius: 9999px;
 }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 162, 39, 0.6);
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #141D35;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(79, 209, 197, 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 209, 197, 0.6);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -56,3 +188,55 @@ h1, h2, h3, h4, h5, h6 {
   scrollbar-width: none;
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+@keyframes marqueeReverse {
+  0% {
+    transform: translateX(-33.333%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  30%, 100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+/* Film grain overlay */
+.film-grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  opacity: 0.035;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .accent-shimmer {
+    animation: none;
+  }
+}

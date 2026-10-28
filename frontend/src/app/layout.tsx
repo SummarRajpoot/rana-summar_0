@@ -1,22 +1,31 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import { AIChatBot } from "@/components/AIChatBot";
+import { Preloader } from "@/components/luxury/Preloader";
+import { SmoothScroll } from "@/components/luxury/SmoothScroll";
+import { ScrollProgress } from "@/components/luxury/ScrollProgress";
+import { AmbientBackground } from "@/components/luxury/AmbientBackground";
+import { CustomCursor } from "@/components/luxury/CustomCursor";
+import { FilmGrain } from "@/components/luxury/FilmGrain";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const playfair = Playfair_Display({
   variable: "--font-heading",
   subsets: ["latin"],
+  weight: ["500", "700"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
 const inter = Inter({
   variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
 const SITE_URL = "https://ranasummar.vercel.app";
-const heroImageUrl = "/images/WhatsApp%20Image%202026-05-17%20at%2012.38.50%20AM.jpeg";
+const heroImageUrl = "/images/WhatsApp%20Image%202026-05-17%20at%2012.38.50%20AM.jpg";
 
 const seoDescription =
   "Rana Summar — Full-Stack AI Developer from Pakistan. Building AI agents & scalable apps with Next.js, FastAPI, LangChain, and LangGraph. Hire on Fiverr & Upwork.";
@@ -127,9 +136,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased scroll-smooth`}
+      className={`${playfair.variable} ${inter.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-[#1B2745] text-[#F7F5F0] relative selection:bg-[#4FD1C5]/30 selection:text-[#B5F5EC]">
+        <Preloader />
+        <SmoothScroll />
+        <ScrollProgress />
+        <AmbientBackground />
+        <CustomCursor />
+        <FilmGrain />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
@@ -144,4 +159,3 @@ export default function RootLayout({
     </html>
   );
 }
-
