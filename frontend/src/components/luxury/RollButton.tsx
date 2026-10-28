@@ -22,11 +22,14 @@ export function RollButton({
   icon,
 }: RollButtonProps) {
   const content = (
-    <span className="relative flex items-center justify-center gap-2 overflow-hidden h-[1.25em]">
-      {icon && <span className="shrink-0">{icon}</span>}
-      <span className="inline-flex flex-col transition-transform duration-300 ease-out group-hover:-translate-y-1/2">
-        <span className="inline-block">{children}</span>
-        <span className="inline-block" aria-hidden="true">{children}</span>
+    <span className="relative z-10 flex items-center justify-center gap-2.5">
+      {icon && (
+        <span className="shrink-0 transition-transform duration-300 group-hover:scale-110">
+          {icon}
+        </span>
+      )}
+      <span className="font-body font-semibold text-[0.9375rem] tracking-[0.01em] whitespace-nowrap">
+        {children}
       </span>
     </span>
   );
@@ -34,17 +37,17 @@ export function RollButton({
   let variantClasses = "";
   if (variant === "primary") {
     variantClasses =
-      "btn-primary-luxury ring-2 ring-[#4FD1C5]/30 shadow-[0_0_24px_rgba(79,209,197,0.3)] hover:shadow-[0_0_32px_rgba(181,245,236,0.5)]";
+      "btn-primary-luxury ring-2 ring-[#4FD1C5]/30 shadow-[0_0_24px_rgba(79,209,197,0.3)] hover:shadow-[0_0_32px_rgba(181,245,236,0.55)] text-[#1B2745]";
   } else if (variant === "secondary") {
     variantClasses =
-      "border-[1.5px] border-[#4FD1C5] text-[#F7F5F0] hover:bg-[#4FD1C5]/15 hover:border-[#B5F5EC]";
+      "border-[1.5px] border-[#4FD1C5] text-[#F7F5F0] hover:bg-[#4FD1C5]/15 hover:border-[#B5F5EC] hover:shadow-[0_0_20px_rgba(79,209,197,0.25)]";
   } else {
     // Tertiary (ivory solid button)
     variantClasses =
       "bg-[#F7F5F0] text-[#1B2745] hover:bg-[#B5F5EC] hover:shadow-[0_0_20px_rgba(181,245,236,0.4)]";
   }
 
-  const baseClasses = `group relative inline-flex items-center justify-center px-7 py-3 rounded-full font-body font-semibold text-[0.9375rem] tracking-[0.01em] transition-all duration-300 overflow-hidden ${variantClasses} ${className}`;
+  const baseClasses = `group relative inline-flex items-center justify-center w-full sm:w-auto px-7 sm:px-8 py-3.5 rounded-full transition-all duration-300 overflow-hidden cursor-pointer active:scale-95 ${variantClasses} ${className}`;
 
   if (isExternal) {
     return (
@@ -59,7 +62,7 @@ export function RollButton({
           {variant === "primary" && (
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 -translate-x-full group-hover:animate-none animate-[sweep_4s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"
+              className="pointer-events-none absolute inset-0 -translate-x-full animate-[sweep_4s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"
             />
           )}
           {content}
@@ -74,7 +77,7 @@ export function RollButton({
         {variant === "primary" && (
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -translate-x-full group-hover:animate-none animate-[sweep_4s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"
+            className="pointer-events-none absolute inset-0 -translate-x-full animate-[sweep_4s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"
           />
         )}
         {content}
@@ -82,4 +85,3 @@ export function RollButton({
     </Magnetic>
   );
 }
-

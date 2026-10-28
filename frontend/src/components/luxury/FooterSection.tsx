@@ -127,13 +127,16 @@ export function FooterSection() {
             viewport={{ once: true }}
             className="group inline-block cursor-default"
           >
+            <p className="font-heading italic text-xl sm:text-2xl md:text-3xl font-semibold text-[#B5F5EC] mb-4 tracking-wide">
+              M.Summar Usman Nasir
+            </p>
             <h2
-              className="font-heading font-black text-[clamp(2.5rem,10vw,8.5rem)] tracking-tight uppercase leading-none transition-all duration-700 text-transparent hover:text-[#4FD1C5] hover:drop-shadow-[0_0_35px_rgba(79,209,197,0.5)]"
+              className="font-heading font-black text-[clamp(2rem,7.5vw,6.5rem)] tracking-tight uppercase leading-none transition-all duration-700 text-transparent hover:text-[#4FD1C5] hover:drop-shadow-[0_0_35px_rgba(79,209,197,0.5)]"
               style={{
                 WebkitTextStroke: "1.5px #4FD1C5",
               }}
             >
-              Rana Summar
+              SOFTWARE ENGINEER
             </h2>
           </motion.div>
         </div>
@@ -159,7 +162,7 @@ export function FooterSection() {
         {/* Bottom Row: Copyright, Nav Links & Back to Top with circular progress */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-[#4FD1C5]/15 text-xs sm:text-sm text-[#AEB8D0]">
           <p className="font-body">
-            &copy; {new Date().getFullYear()} Rana Summar. All rights reserved.
+            &copy; {new Date().getFullYear()} M.Summar Usman Nasir. All rights reserved.
           </p>
 
           <div className="flex items-center gap-6 font-semibold">
