@@ -28,25 +28,27 @@ const SITE_URL = "https://ranasummar.vercel.app";
 const heroImageUrl = "/images/WhatsApp%20Image%202026-05-17%20at%2012.38.50%20AM.jpg";
 
 const seoDescription =
-  "Rana Summar — Full-Stack AI Developer from Pakistan. Building AI agents & scalable apps with Next.js, FastAPI, LangChain, and LangGraph. Hire on Fiverr & Upwork.";
+  "Rana Summar (M. Summar Usman Nasir) — Software Engineer & Full-Stack AI Developer specializing in autonomous AI agents, LLM architectures, Next.js, and FastAPI. Building production-grade intelligent systems.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Rana Summar | Full-Stack AI Developer",
+  title: "Rana Summar | Software Engineer & AI Systems Developer",
   description: seoDescription,
   applicationName: "Rana Summar",
   keywords: [
     "Rana Summar",
+    "M. Summar Usman Nasir",
     "Summar Rajpoot",
     "Rana Summar Rajpoot",
     "ranasummar",
+    "Software Engineer",
     "Full-Stack AI Developer",
-    "AI developer Pakistan",
+    "AI Engineer Pakistan",
     "Next.js developer",
     "FastAPI developer",
     "LangChain developer",
-    "AI agents",
-    "freelance developer Pakistan",
+    "LangGraph AI agents",
+    "freelance software engineer",
   ],
   authors: [{ name: "Rana Summar", url: SITE_URL }],
   creator: "Rana Summar",
@@ -64,16 +66,16 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Rana Summar (Summar Rajpoot) | Full-Stack AI Developer",
+    title: "Rana Summar | Software Engineer & AI Systems Developer",
     description: seoDescription,
     url: SITE_URL,
     siteName: "Rana Summar",
     images: [
       {
-        url: "/images/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Rana Summar — Full-Stack AI Developer",
+        url: heroImageUrl,
+        width: 720,
+        height: 1520,
+        alt: "Rana Summar — Software Engineer & AI Developer",
       },
     ],
     type: "website",
@@ -81,9 +83,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rana Summar (Summar Rajpoot) | Full-Stack AI Developer",
+    title: "Rana Summar | Software Engineer & AI Systems Developer",
     description: seoDescription,
-    images: ["/images/og-image.png"],
+    images: [heroImageUrl],
     creator: "@RanaSummar4",
   },
   robots: {
@@ -97,7 +99,7 @@ const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Rana Summar",
-  alternateName: ["Summar Rajpoot", "Rana Summar Rajpoot"],
+  alternateName: ["M. Summar Usman Nasir", "Summar Rajpoot", "Rana Summar Rajpoot"],
   url: SITE_URL,
 };
 
@@ -105,12 +107,12 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Rana Summar",
-  alternateName: ["Summar Rajpoot", "Rana Summar Rajpoot", "ranasummar"],
+  alternateName: ["M. Summar Usman Nasir", "Summar Rajpoot", "Rana Summar Rajpoot", "ranasummar"],
   url: SITE_URL,
   image: `${SITE_URL}${heroImageUrl.replace(/%20/g, " ")}`,
-  jobTitle: "Full-Stack AI Developer",
+  jobTitle: "Software Engineer & AI Developer",
   description:
-    "Final-year BS Software Engineering student specializing in AI agents and full-stack applications.",
+    "Software Engineer and AI Systems Developer specializing in autonomous agents, LLM pipelines, Next.js, and FastAPI.",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Hafizabad",
