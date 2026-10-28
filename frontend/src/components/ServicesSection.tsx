@@ -74,7 +74,7 @@ export const servicesData: ServiceItem[] = [
     title: "Voice & Speech AI",
     tagline: "Let's scope it",
     description:
-      "Voice-enabled assistants with speech-to-text and spoken replies, in the same spirit as my Kisaan Assistant project.",
+      "Voice-enabled assistants with speech-to-text, real-time audio streaming, and natural spoken conversational replies.",
     included: [
       "Voice input and spoken responses",
       "Urdu and English language support",

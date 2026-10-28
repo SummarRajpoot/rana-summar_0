@@ -40,16 +40,6 @@ const projectsData: ProjectItem[] = [
     backend: "https://github.com/SummarRajpoot/UAF-6th-Project-Backend",
   },
   {
-    id: "kisaan",
-    title: "Kisaan Assistant",
-    description:
-      "Agricultural assistant agent with live Pakistan crop prices (AMIS/PBS se scraped) and DRAP-approved pesticide recommendations. Strict no-fake-data policy.",
-    image: undefined,
-    tags: ["Whisper API", "Web Speech API"],
-    liveDemo: "#",
-    github: "#",
-  },
-  {
     id: "outbreakiq",
     title: "OutbreakIQ",
     description:
