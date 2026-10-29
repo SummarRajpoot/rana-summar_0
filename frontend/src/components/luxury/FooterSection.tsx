@@ -128,7 +128,7 @@ export function FooterSection() {
             className="group inline-block cursor-default"
           >
             <p className="font-heading italic text-xl sm:text-2xl md:text-3xl font-semibold text-[#B5F5EC] mb-4 tracking-wide">
-              Rana Summar
+              M.Summar Usman Nasir
             </p>
             <h2
               className="font-heading font-black text-[clamp(2rem,7.5vw,6.5rem)] tracking-tight uppercase leading-none transition-all duration-700 text-transparent hover:text-[#4FD1C5] hover:drop-shadow-[0_0_35px_rgba(79,209,197,0.5)]"
