@@ -51,6 +51,16 @@ const projectsData: ProjectItem[] = [
     backend: "https://github.com/SummarRajpoot/OutbreakIQ_backend",
   },
   {
+    id: "factory-maintenance",
+    title: "Factory Maintenance Agent",
+    description:
+      "Upload a photo of a machine part, a sensor report, or a maintenance document (PDF/text). The app finds the defect, looks up the right procedure in the maintenance manuals and shows the exact manual page it relied on, writes a recommended action, asks a person to approve or reject it, and then hands the approved case to Evolus, which prepares the maintenance task.",
+    image: "/images/factory-maintenance.png",
+    tags: ["Next.js", "FastAPI", "Python", "LangGraph", "Supabase"],
+    liveDemo: "https://act-iii-hackathon-prototype.vercel.app/",
+    github: "https://github.com/SummarRajpoot/ACT-III-Hackathon-Prototype",
+  },
+  {
     id: "githubagent",
     title: "GitHub Agent",
     description:
@@ -192,6 +202,8 @@ function ProjectCard({ project, index, total }: ProjectCardProps) {
               {project.github && (
                 <Link
                   href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group inline-flex items-center gap-1.5 text-sm font-semibold text-[#C9D1E3] hover:text-[#F7F5F0] transition-colors"
                 >
                   <span>GitHub</span>
