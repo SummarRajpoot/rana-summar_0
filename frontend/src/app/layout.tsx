@@ -28,7 +28,7 @@ const SITE_URL = "https://ranasummar.vercel.app";
 const heroImageUrl = "/images/WhatsApp%20Image%202026-05-17%20at%2012.38.50%20AM.jpg";
 
 const seoDescription =
-  "Rana Summar (M. Summar Usman Nasir) — Software Engineer & Full-Stack AI Developer specializing in autonomous AI agents, LLM architectures, Next.js, and FastAPI. Building production-grade intelligent systems.";
+  "Rana Summar — Software Engineer & Full-Stack AI Developer specializing in autonomous AI agents, LLM architectures, Next.js, and FastAPI. Building production-grade intelligent systems.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -37,7 +37,6 @@ export const metadata: Metadata = {
   applicationName: "Rana Summar",
   keywords: [
     "Rana Summar",
-    "M. Summar Usman Nasir",
     "Summar Rajpoot",
     "Rana Summar Rajpoot",
     "ranasummar",
@@ -99,7 +98,7 @@ const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Rana Summar",
-  alternateName: ["M. Summar Usman Nasir", "Summar Rajpoot", "Rana Summar Rajpoot"],
+  alternateName: ["Summar Rajpoot", "Rana Summar Rajpoot"],
   url: SITE_URL,
 };
 
@@ -107,7 +106,7 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Rana Summar",
-  alternateName: ["M. Summar Usman Nasir", "Summar Rajpoot", "Rana Summar Rajpoot", "ranasummar"],
+  alternateName: ["Summar Rajpoot", "Rana Summar Rajpoot", "ranasummar"],
   url: SITE_URL,
   image: `${SITE_URL}${heroImageUrl.replace(/%20/g, " ")}`,
   jobTitle: "Software Engineer & AI Developer",
