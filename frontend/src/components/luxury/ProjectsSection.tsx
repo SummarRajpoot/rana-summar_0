@@ -91,10 +91,15 @@ function ProjectCard({ project, index, total }: ProjectCardProps) {
   // Calculate deck scaling as subsequent cards scroll over
   const scale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
 
+  const targetUrl =
+    project.liveDemo && project.liveDemo !== "#"
+      ? project.liveDemo
+      : project.github || project.frontend;
+
   return (
     <div
       ref={cardRef}
-      className="sticky top-28 sm:top-32 mb-12 sm:mb-16 last:mb-0"
+      className="sticky top-24 sm:top-28 mb-12 sm:mb-16 last:mb-0"
       style={{ zIndex: index + 10 }}
     >
       <motion.div
@@ -103,34 +108,57 @@ function ProjectCard({ project, index, total }: ProjectCardProps) {
         }}
         className="surface-card rounded-[24px] border border-[#4FD1C5]/25 overflow-hidden shadow-[0_20px_60px_rgba(10,18,34,0.6)] backdrop-blur-md transition-all duration-300 hover:border-[#4FD1C5]/60"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-          {/* Project Screenshot / Media Area */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 p-5 sm:p-7 lg:p-9 items-center">
+          {/* Project Screenshot / Media Area in a luxury browser frame */}
           <div
             data-cursor="view"
-            className="lg:col-span-5 relative min-h-[220px] sm:min-h-[280px] lg:min-h-full bg-[#16203A] overflow-hidden group cursor-pointer"
+            onClick={() => targetUrl && window.open(targetUrl, "_blank")}
+            className="lg:col-span-7 relative group cursor-pointer"
           >
-            {project.image ? (
-              <div className="relative w-full h-full min-h-[220px] sm:min-h-[280px] lg:min-h-[360px] overflow-hidden">
-                <Image
-                  src={project.image}
-                  alt={`${project.title} — project screenshot`}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 480px"
-                  className="object-cover group-hover:scale-106 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-transparent via-[#212F54]/30 to-[#212F54] opacity-80" />
+            <div className="relative rounded-2xl overflow-hidden border border-[#4FD1C5]/30 bg-[#141D35] shadow-[0_12px_40px_rgba(0,0,0,0.5)] group-hover:border-[#4FD1C5]/70 group-hover:shadow-[0_16px_50px_rgba(79,209,197,0.22)] transition-all duration-500">
+              {/* Browser window header bar */}
+              <div className="flex items-center justify-between px-4 py-2.5 bg-[#1B2745]/90 border-b border-[#4FD1C5]/15 backdrop-blur-sm select-none">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]/80" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]/80" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#27C93F]/80" />
+                </div>
+                <div className="px-3 py-0.5 rounded-md bg-[#141D35] border border-[#4FD1C5]/15 text-[11px] font-mono text-[#AEB8D0]/80 truncate max-w-[200px] sm:max-w-[280px]">
+                  {project.liveDemo && project.liveDemo !== "#"
+                    ? project.liveDemo.replace(/^https?:\/\//, "").replace(/\/$/, "")
+                    : "preview"}
+                </div>
+                <div className="flex items-center text-[#4FD1C5] opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </div>
               </div>
-            ) : (
-              <div className="w-full h-full min-h-[220px] sm:min-h-[280px] flex items-center justify-center bg-gradient-to-br from-[#293962] to-[#1B2745] p-8 text-center">
-                <span className="font-heading italic text-4xl text-[#4FD1C5]/30 font-bold select-none">
-                  {project.title}
-                </span>
-              </div>
-            )}
+
+              {/* Full Screenshot Container with natural 1370/648 aspect ratio */}
+              {project.image ? (
+                <div className="relative w-full aspect-[1370/648] bg-[#0F172A] overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt={`${project.title} — project screenshot`}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 680px"
+                    className="object-contain sm:object-cover sm:object-top group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                    priority={index === 0}
+                  />
+                  {/* Subtle inner highlight */}
+                  <div className="absolute inset-0 pointer-events-none border border-white/5 rounded-b-2xl" />
+                </div>
+              ) : (
+                <div className="w-full aspect-[1370/648] flex items-center justify-center bg-gradient-to-br from-[#293962] to-[#1B2745] p-8 text-center">
+                  <span className="font-heading italic text-3xl sm:text-4xl text-[#4FD1C5]/40 font-bold select-none">
+                    {project.title}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Project Content Area */}
-          <div className="lg:col-span-7 p-7 sm:p-9 lg:p-11 flex flex-col justify-between">
+          <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between gap-4 mb-3">
                 <span className="eyebrow-label text-xs">Project 0{index + 1}</span>
@@ -139,16 +167,16 @@ function ProjectCard({ project, index, total }: ProjectCardProps) {
                 </span>
               </div>
 
-              <h3 className="font-heading font-bold text-2xl sm:text-3xl text-[#F7F5F0] mb-4">
+              <h3 className="font-heading font-bold text-2xl sm:text-3xl text-[#F7F5F0] mb-3">
                 {project.title}
               </h3>
 
-              <p className="font-body text-[#C9D1E3] text-sm sm:text-base leading-relaxed mb-6">
+              <p className="font-body text-[#C9D1E3] text-sm sm:text-base leading-relaxed mb-5">
                 {project.description}
               </p>
 
               {/* Tags with stagger */}
-              <div className="flex flex-wrap gap-2 mb-8">
+              <div className="flex flex-wrap gap-2 mb-6">
                 {project.tags.map((tag, tIdx) => (
                   <motion.span
                     key={tag}
@@ -156,7 +184,7 @@ function ProjectCard({ project, index, total }: ProjectCardProps) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: tIdx * 0.03 }}
-                    className="text-xs font-semibold px-3 py-1 rounded-full bg-[#16203A] text-[#B5F5EC] border border-[#4FD1C5]/20"
+                    className="text-xs font-semibold px-3 py-1 rounded-full bg-[#141D35] text-[#B5F5EC] border border-[#4FD1C5]/20"
                   >
                     {tag}
                   </motion.span>
@@ -165,7 +193,7 @@ function ProjectCard({ project, index, total }: ProjectCardProps) {
             </div>
 
             {/* Links with sliding arrows */}
-            <div className="flex flex-wrap items-center gap-5 pt-4 border-t border-[#4FD1C5]/15">
+            <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-[#4FD1C5]/15">
               {project.liveDemo && project.liveDemo !== "#" && (
                 <Link
                   href={project.liveDemo}
