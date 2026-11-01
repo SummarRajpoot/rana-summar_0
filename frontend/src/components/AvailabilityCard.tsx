@@ -95,8 +95,13 @@ export function AvailabilityCard({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.65, ease: [0.22, 0.7, 0.2, 1] }}
-        className="surface-card rounded-[20px] p-6 sm:p-8 shadow-[0_16px_50px_rgba(10,18,34,0.45)] border border-[#4FD1C5]/25 overflow-hidden transition-all duration-300 hover:border-[#4FD1C5]/50"
+        className="surface-card rounded-[20px] p-6 sm:p-8 shadow-[0_16px_50px_rgba(10,18,34,0.45)] border border-[#4FD1C5]/25 overflow-hidden transition-all duration-300 hover:border-[#4FD1C5]/60 hover:shadow-[0_20px_50px_rgba(79,209,197,0.18)] relative group"
       >
+        {/* Subtle Top Specular Highlight */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#4FD1C5]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        />
         {/* Header Section */}
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-6 border-b border-[#4FD1C5]/15">
           <div>

@@ -59,10 +59,15 @@ export function RollButton({
           className={baseClasses}
         >
           {/* Light-sweep shine for primary button */}
-          {variant === "primary" && (
+          {variant === "primary" ? (
             <span
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 -translate-x-full animate-[sweep_4s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"
+            />
+          ) : (
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-[#4FD1C5]/20 to-transparent"
             />
           )}
           {content}
@@ -74,10 +79,15 @@ export function RollButton({
   return (
     <Magnetic strength={0.3}>
       <Link href={href} className={baseClasses}>
-        {variant === "primary" && (
+        {variant === "primary" ? (
           <span
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -translate-x-full animate-[sweep_4s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"
+          />
+        ) : (
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-[#4FD1C5]/20 to-transparent"
           />
         )}
         {content}

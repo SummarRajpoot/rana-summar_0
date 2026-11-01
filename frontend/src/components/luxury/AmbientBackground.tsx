@@ -90,6 +90,40 @@ export function AmbientBackground() {
       ) : (
         <div className="absolute bottom-[18%] left-[20%] w-[460px] h-[460px] rounded-full bg-[#B5F5EC]/08 blur-[130px]" />
       )}
+
+      {/* 4. Luxury Starlight Spark Particles */}
+      {!prefersReducedMotion && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[
+            { top: "14%", left: "16%", delay: 0, dur: 7 },
+            { top: "26%", left: "84%", delay: 1.5, dur: 9 },
+            { top: "45%", left: "12%", delay: 3, dur: 8 },
+            { top: "62%", left: "78%", delay: 2, dur: 10 },
+            { top: "76%", left: "22%", delay: 4, dur: 8.5 },
+            { top: "86%", left: "70%", delay: 1, dur: 7.5 },
+          ].map((star, sIdx) => (
+            <motion.div
+              key={sIdx}
+              animate={{
+                y: [0, -18, 0],
+                opacity: [0.15, 0.75, 0.15],
+                scale: [0.8, 1.25, 0.8],
+              }}
+              transition={{
+                duration: star.dur,
+                repeat: Infinity,
+                delay: star.delay,
+                ease: "easeInOut",
+              }}
+              style={{
+                top: star.top,
+                left: star.left,
+              }}
+              className="absolute w-1.5 h-1.5 rounded-full bg-[#B5F5EC] shadow-[0_0_8px_#4FD1C5]"
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

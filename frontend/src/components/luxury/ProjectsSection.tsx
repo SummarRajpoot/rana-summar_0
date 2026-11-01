@@ -35,9 +35,8 @@ const projectsData: ProjectItem[] = [
       "HF Spaces",
       "Vercel",
     ],
-    liveDemo: "https://jobacort-ai.vercel.app/",
-    frontend: "https://github.com/SummarRajpoot/UAF-6th-Project-Frontend",
-    backend: "https://github.com/SummarRajpoot/UAF-6th-Project-Backend",
+    liveDemo: "https://jobscort-ai.vercel.app/",
+    github: "https://github.com/SummarRajpoot/Jobscout-AI",
   },
   {
     id: "outbreakiq",
@@ -106,8 +105,13 @@ function ProjectCard({ project, index, total }: ProjectCardProps) {
         style={{
           scale: prefersReducedMotion ? 1 : scale,
         }}
-        className="surface-card rounded-[24px] border border-[#4FD1C5]/25 overflow-hidden shadow-[0_20px_60px_rgba(10,18,34,0.6)] backdrop-blur-md transition-all duration-300 hover:border-[#4FD1C5]/60"
+        className="surface-card rounded-[24px] border border-[#4FD1C5]/25 overflow-hidden shadow-[0_20px_60px_rgba(10,18,34,0.6)] backdrop-blur-md transition-all duration-300 hover:border-[#4FD1C5]/60 hover:shadow-[0_25px_70px_rgba(79,209,197,0.2)] relative group"
       >
+        {/* Subtle Luxury Top Specular Highlight */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#4FD1C5]/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
+        />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 p-5 sm:p-7 lg:p-9 items-center">
           {/* Project Screenshot / Media Area in a luxury browser frame */}
           <div

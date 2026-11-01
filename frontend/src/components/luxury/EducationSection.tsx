@@ -134,7 +134,11 @@ export function EducationSection() {
                       isEven ? "md:pl-8" : "md:pr-8"
                     }`}
                   >
-                    <div className="surface-card rounded-[20px] p-7 sm:p-8 hover:border-[#4FD1C5]/50 transition-all duration-300 shadow-[0_12px_40px_rgba(10,18,34,0.4)] group">
+                    <div className="surface-card rounded-[20px] p-7 sm:p-8 hover:border-[#4FD1C5]/60 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(79,209,197,0.18)] transition-all duration-300 shadow-[0_12px_40px_rgba(10,18,34,0.4)] relative overflow-hidden group">
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#4FD1C5]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      />
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 mb-3">
                         <h3 className="font-heading font-bold text-lg sm:text-xl text-[#F7F5F0] group-hover:text-[#B5F5EC] transition-colors">
                           {item.degree}

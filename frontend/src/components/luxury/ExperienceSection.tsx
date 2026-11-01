@@ -24,8 +24,12 @@ export function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.85, ease: [0.22, 0.7, 0.2, 1] }}
-            className="surface-card rounded-[20px] p-7 sm:p-9 flex flex-col justify-between hover:border-[#4FD1C5]/50 transition-all duration-300 shadow-[0_16px_45px_rgba(10,18,34,0.4)]"
+            className="surface-card rounded-[20px] p-7 sm:p-9 flex flex-col justify-between hover:border-[#4FD1C5]/60 hover:-translate-y-1.5 hover:shadow-[0_24px_60px_rgba(79,209,197,0.18)] transition-all duration-300 shadow-[0_16px_45px_rgba(10,18,34,0.4)] relative overflow-hidden group"
           >
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#4FD1C5]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            />
             <div>
               <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                 <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#F7F5F0]">
@@ -100,8 +104,12 @@ export function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 0.7, 0.2, 1] }}
-            className="surface-card rounded-[20px] p-7 sm:p-9 flex flex-col justify-between hover:border-[#4FD1C5]/50 transition-all duration-300 shadow-[0_16px_45px_rgba(10,18,34,0.4)]"
+            className="surface-card rounded-[20px] p-7 sm:p-9 flex flex-col justify-between hover:border-[#4FD1C5]/60 hover:-translate-y-1.5 hover:shadow-[0_24px_60px_rgba(79,209,197,0.18)] transition-all duration-300 shadow-[0_16px_45px_rgba(10,18,34,0.4)] relative overflow-hidden group"
           >
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#4FD1C5]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            />
             <div>
               <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                 <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#F7F5F0]">

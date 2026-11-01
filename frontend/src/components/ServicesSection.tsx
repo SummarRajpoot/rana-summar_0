@@ -532,8 +532,12 @@ export function ServicesSection() {
                     delay: idx * 0.1,
                     ease: [0.22, 0.7, 0.2, 1],
                   }}
-                  className="surface-card rounded-[20px] p-6 sm:p-7 flex flex-col items-start shadow-md hover:border-[#4FD1C5]/50 transition-colors"
+                  className="surface-card rounded-[20px] p-6 sm:p-7 flex flex-col items-start shadow-md hover:border-[#4FD1C5]/60 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(79,209,197,0.18)] transition-all duration-300 relative overflow-hidden group"
                 >
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#4FD1C5]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  />
                   <div className="w-12 h-12 rounded-2xl bg-[#212F54] border-2 border-[#4FD1C5] text-[#4FD1C5] font-heading font-extrabold text-base flex items-center justify-center shadow-[0_0_15px_rgba(79,209,197,0.3)] mb-5">
                     {item.step}
                   </div>

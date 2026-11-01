@@ -102,8 +102,12 @@ export function CertificatesSection() {
                 layoutId={`cert-card-${cert.id}`}
                 onClick={() => setSelectedCert(cert)}
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                className="shrink-0 w-[290px] sm:w-[350px] surface-card rounded-[20px] p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(10,18,34,0.4)] border border-[#4FD1C5]/20 hover:border-[#4FD1C5]/60 transition-colors cursor-pointer group"
+                className="shrink-0 w-[290px] sm:w-[350px] surface-card rounded-[20px] p-5 flex flex-col justify-between shadow-[0_12px_40px_rgba(10,18,34,0.4)] border border-[#4FD1C5]/20 hover:border-[#4FD1C5]/60 hover:shadow-[0_20px_50px_rgba(79,209,197,0.18)] transition-all duration-300 cursor-pointer group relative overflow-hidden"
               >
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#4FD1C5]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-[20px]"
+                />
                 <div>
                   {/* Certificate Thumbnail */}
                   <div className="relative w-full h-44 rounded-xl overflow-hidden bg-[#16203A] mb-4 border border-[#4FD1C5]/15">

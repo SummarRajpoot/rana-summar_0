@@ -39,9 +39,8 @@ He transitioned into AI development with strong discipline and practical problem
    - Description: Autonomous AI agent for intelligent CV/Resume parsing, real-time job matching, and interactive dashboard presentation.
    - Built as: 6th semester project at UAF under Sir Hassan Tariq.
    - Tech Stack: Next.js 14, FastAPI, LangChain/LangGraph, Groq (llama-3.3-70b-versatile), Google Gemini, Tavily search, Hugging Face Spaces, Vercel.
-   - Live Demo: https://jobacort-ai.vercel.app/
-   - Frontend Repo: https://github.com/SummarRajpoot/UAF-6th-Project-Frontend
-   - Backend Repo: https://github.com/SummarRajpoot/UAF-6th-Project-Backend
+   - Live Demo: https://jobscort-ai.vercel.app/
+   - GitHub Repo: https://github.com/SummarRajpoot/Jobscout-AI
 
 2. OutbreakIQ:
    - Description: Pakistani disease surveillance dashboard tracking Dengue, Malaria, COVID-19, and Heatstroke with real WHO GHO, disease.sh, and OpenWeatherMap APIs. Includes data export and Framer Motion UI animations.
