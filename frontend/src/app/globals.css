@@ -102,6 +102,24 @@ body {
   animation: shimmerAnim 5s linear infinite;
 }
 
+/* Gold shimmer animated gradient for coding-themed intro */
+@keyframes goldShimmerAnim {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.gold-shimmer {
+  background: linear-gradient(90deg, #D4AF37 0%, #FFF2CC 35%, #F5D77F 65%, #D4AF37 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmerAnim 4s linear infinite;
+}
+
 /* Conic gradient border animation */
 @keyframes rotateBorder {
   0% {
@@ -237,6 +255,9 @@ body {
     scroll-behavior: auto !important;
   }
   .accent-shimmer {
+    animation: none;
+  }
+  .gold-shimmer {
     animation: none;
   }
 }
