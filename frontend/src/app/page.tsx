@@ -33,7 +33,7 @@ export default function Home() {
     <>
       <Navbar />
 
-      <main id="main-content" tabIndex={-1} className="outline-none">
+      <main>
         {/* ── 1. HERO ──────────────────────────────────────────── */}
         <section
           id="home"
