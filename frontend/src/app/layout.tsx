@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
 import { AIChatBot } from "@/components/AIChatBot";
-import { Preloader } from "@/components/luxury/Preloader";
+import { IntroLoader } from "@/components/IntroLoader";
 import { SmoothScroll } from "@/components/luxury/SmoothScroll";
 import { ScrollProgress } from "@/components/luxury/ScrollProgress";
 import { AmbientBackground } from "@/components/luxury/AmbientBackground";
@@ -19,6 +19,13 @@ const playfair = Playfair_Display({
 
 const inter = Inter({
   variable: "--font-body",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
@@ -138,10 +145,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable} h-full antialiased scroll-smooth`}
+      className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full flex flex-col bg-[#1B2745] text-[#F7F5F0] relative selection:bg-[#4FD1C5]/30 selection:text-[#B5F5EC]">
-        <Preloader />
+        <IntroLoader />
         <SmoothScroll />
         <ScrollProgress />
         <AmbientBackground />
