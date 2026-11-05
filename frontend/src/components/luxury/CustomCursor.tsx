@@ -68,7 +68,7 @@ export function CustomCursor() {
   if (!isPointerDevice) return null;
 
   const ringSizes = {
-    default: { width: 36, height: 36, bg: "transparent", border: "rgba(79, 209, 197, 0.45)" },
+    default: { width: 36, height: 36, bg: "rgba(79, 209, 197, 0)", border: "rgba(79, 209, 197, 0.45)" },
     hover: { width: 52, height: 52, bg: "rgba(79, 209, 197, 0.12)", border: "#4FD1C5" },
     view: { width: 68, height: 68, bg: "rgba(33, 47, 84, 0.9)", border: "#4FD1C5" },
     drag: { width: 68, height: 68, bg: "rgba(33, 47, 84, 0.9)", border: "#4FD1C5" },

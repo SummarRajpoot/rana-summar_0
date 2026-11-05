@@ -61,6 +61,7 @@ export function IntroGate({ children }: { children: React.ReactNode }) {
 
   const rafRef = useRef<number | null>(null);
   const fadedRef = useRef(false);
+  const finishedRef = useRef(false);
 
   const lockScroll = useCallback(() => {
     document.documentElement.style.overflow = "hidden";
@@ -73,6 +74,8 @@ export function IntroGate({ children }: { children: React.ReactNode }) {
   }, []);
 
   const handleExitComplete = useCallback(() => {
+    if (finishedRef.current) return;
+    finishedRef.current = true;
     try {
       sessionStorage.setItem("introSeen", "true");
     } catch {}
@@ -164,6 +167,15 @@ export function IntroGate({ children }: { children: React.ReactNode }) {
     lockScroll();
   }, [phase, lockScroll, unlockScroll]);
 
+  // Backup if Framer never reports the wipe as complete
+  useEffect(() => {
+    if (phase !== "exiting") return;
+    const fallback = window.setTimeout(() => {
+      handleExitComplete();
+    }, 950);
+    return () => window.clearTimeout(fallback);
+  }, [phase, handleExitComplete]);
+
   // Keyboard shortcut listener (Esc key skips to exit)
   useEffect(() => {
     if (phase !== "intro") return;
@@ -189,7 +201,13 @@ export function IntroGate({ children }: { children: React.ReactNode }) {
             role="status"
             aria-label="Portfolio intro sequence"
             className={styles.overlay}
-            style={{ opacity: 1 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 99999,
+              opacity: 1,
+              background: "linear-gradient(180deg, #1F2D52 0%, #16203A 100%)",
+            }}
             initial={false}
             animate={{
               clipPath:
@@ -400,7 +418,7 @@ export function IntroGate({ children }: { children: React.ReactNode }) {
         )}
       </AnimatePresence>
 
-      {/* Site stays invisible during intro; revealed under the iris wipe, then unlocked at "done" */}
+      {/* Invisible during intro (opaque overlay). Shown under the iris wipe; unlocked at "done". */}
       <div
         id="site-wrapper"
         className={phase === "intro" ? styles.siteWrapperHidden : styles.siteWrapperVisible}
