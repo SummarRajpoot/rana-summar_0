@@ -60,6 +60,19 @@ html {
   scroll-behavior: smooth;
 }
 
+html:not(.intro-seen) {
+  overflow: hidden;
+}
+
+html.intro-seen #intro-overlay {
+  display: none !important;
+}
+
+html.intro-seen #site-wrapper {
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
 body {
   background: linear-gradient(180deg, #1F2D52 0%, #16203A 100%);
   background-attachment: fixed;

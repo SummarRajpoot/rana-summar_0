@@ -2,27 +2,39 @@
 
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
+import { useIntro } from "@/components/IntroGate";
 
 interface TypewriterEyebrowProps {
   text?: string;
   speed?: number;
   delay?: number;
   className?: string;
+  start?: boolean;
 }
 
 export function TypewriterEyebrow({
   text = "FULL-STACK AI DEVELOPER",
   speed = 45,
-  delay = 300,
+  delay = 200,
   className = "",
+  start = true,
 }: TypewriterEyebrowProps) {
+  const { ready } = useIntro();
   const [displayedText, setDisplayedText] = useState("");
   const prefersReducedMotion = useReducedMotion() ?? false;
+  const shouldStart = start && ready;
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setDisplayedText(text);
+    if (!shouldStart) {
+      setDisplayedText("");
       return;
+    }
+
+    if (prefersReducedMotion) {
+      const timer = setTimeout(() => {
+        setDisplayedText(text);
+      }, 0);
+      return () => clearTimeout(timer);
     }
 
     let timeoutId: NodeJS.Timeout;
@@ -45,7 +57,7 @@ export function TypewriterEyebrow({
       clearTimeout(initialDelay);
       clearInterval(timeoutId);
     };
-  }, [text, speed, delay, prefersReducedMotion]);
+  }, [text, speed, delay, prefersReducedMotion, shouldStart]);
 
   return (
     <div className={`eyebrow-label ${className}`}>
@@ -54,4 +66,3 @@ export function TypewriterEyebrow({
     </div>
   );
 }
-

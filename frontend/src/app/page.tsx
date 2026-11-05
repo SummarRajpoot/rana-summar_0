@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/Navbar";
+import { HeroStagger, HeroReveal } from "@/components/HeroReveal";
 import { TypewriterEyebrow } from "@/components/luxury/TypewriterEyebrow";
 import { HeroPhoto } from "@/components/luxury/HeroPhoto";
 import { RollButton } from "@/components/luxury/RollButton";
@@ -39,8 +40,8 @@ export default function Home() {
           id="home"
           className="min-h-screen flex flex-col justify-center px-6 pt-32 pb-16 relative"
         >
-          <div className="w-full max-w-[1160px] mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-16">
-            <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
+          <HeroStagger className="w-full max-w-[1160px] mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-16">
+            <HeroReveal className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
               <TypewriterEyebrow text="FULL-STACK AI DEVELOPER" className="mb-4" />
 
               <h1 className="font-heading font-bold text-[clamp(2.75rem,7vw,5.5rem)] leading-[1.04] tracking-[-0.03em] text-[#F7F5F0] mb-6">
@@ -118,11 +119,13 @@ export default function Home() {
                 <span className="hidden sm:inline-block w-px h-3.5 bg-[#4FD1C5]/30" aria-hidden="true" />
                 <span>BS Software Engineering, UAF</span>
               </div>
-            </div>
+            </HeroReveal>
 
             {/* Profile Photo */}
-            <HeroPhoto />
-          </div>
+            <HeroReveal>
+              <HeroPhoto />
+            </HeroReveal>
+          </HeroStagger>
 
           {/* Animated Scroll Cue */}
           <div className="w-full flex justify-center mt-12 mb-2">

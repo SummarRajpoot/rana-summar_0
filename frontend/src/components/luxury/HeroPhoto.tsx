@@ -3,13 +3,16 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import { useIntro } from "@/components/IntroGate";
 
 export function HeroPhoto() {
+  const { ready } = useIntro();
   const containerRef = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   const [glarePos, setGlarePos] = useState({ x: 50, y: 50, opacity: 0 });
   const prefersReducedMotion = useReducedMotion() ?? false;
+  const live = ready && !prefersReducedMotion;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (prefersReducedMotion || !containerRef.current) return;
@@ -74,11 +77,11 @@ export function HeroPhoto() {
           {/* Ken Burns Zoom on Image */}
           <motion.div
             animate={
-              prefersReducedMotion
-                ? undefined
-                : {
+              live
+                ? {
                     scale: [1.02, 1.07, 1.02],
                   }
+                : undefined
             }
             transition={{
               duration: 12,
@@ -114,12 +117,12 @@ export function HeroPhoto() {
         {/* Floating Tech Chip 1: Next.js (top-left) */}
         <motion.div
           animate={
-            prefersReducedMotion
-              ? undefined
-              : {
+            live
+              ? {
                   y: [0, -8, 0],
                   rotate: [0, -1.5, 0],
                 }
+              : undefined
           }
           transition={{
             duration: 6,
@@ -135,12 +138,12 @@ export function HeroPhoto() {
         {/* Floating Tech Chip 2: LangGraph (bottom-left) */}
         <motion.div
           animate={
-            prefersReducedMotion
-              ? undefined
-              : {
+            live
+              ? {
                   y: [0, 9, 0],
                   rotate: [0, 1.5, 0],
                 }
+              : undefined
           }
           transition={{
             duration: 8,
@@ -157,12 +160,12 @@ export function HeroPhoto() {
         {/* Floating Tech Chip 3: FastAPI (top-right) */}
         <motion.div
           animate={
-            prefersReducedMotion
-              ? undefined
-              : {
+            live
+              ? {
                   y: [0, -10, 0],
                   rotate: [0, 1, 0],
                 }
+              : undefined
           }
           transition={{
             duration: 7,

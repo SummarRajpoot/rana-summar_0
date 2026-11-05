@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Magnetic } from "@/components/motion/Magnetic";
+import { useIntro } from "@/components/IntroGate";
 
 const navLinks = [
   { name: "Education", href: "#education" },
@@ -19,6 +20,7 @@ const navLinks = [
 ];
 
 export function Navbar() {
+  const { phase } = useIntro();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -77,6 +79,8 @@ export function Navbar() {
       observers.forEach((obs) => obs.disconnect());
     };
   }, []);
+
+  if (phase === "intro") return null;
 
   return (
     <>

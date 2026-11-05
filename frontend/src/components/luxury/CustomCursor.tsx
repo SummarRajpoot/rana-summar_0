@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useIntro } from "@/components/IntroGate";
 
 export function CustomCursor() {
+  const { phase } = useIntro();
   const [isVisible, setIsVisible] = useState(false);
   const [cursorType, setCursorType] = useState<"default" | "hover" | "view" | "drag">("default");
   const [isPointerDevice, setIsPointerDevice] = useState(false);
@@ -73,6 +75,8 @@ export function CustomCursor() {
   };
 
   const currentSize = ringSizes[cursorType];
+
+  if (phase === "intro") return null;
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[9995] overflow-hidden">

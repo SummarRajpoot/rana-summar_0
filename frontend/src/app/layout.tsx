@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
 import { AIChatBot } from "@/components/AIChatBot";
-import { IntroLoader } from "@/components/IntroLoader";
+import { IntroGate } from "@/components/IntroGate";
 import { SmoothScroll } from "@/components/luxury/SmoothScroll";
 import { ScrollProgress } from "@/components/luxury/ScrollProgress";
 import { AmbientBackground } from "@/components/luxury/AmbientBackground";
@@ -148,22 +148,28 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full flex flex-col bg-[#1B2745] text-[#F7F5F0] relative selection:bg-[#4FD1C5]/30 selection:text-[#B5F5EC]">
-        <IntroLoader />
-        <SmoothScroll />
-        <ScrollProgress />
-        <AmbientBackground />
-        <CustomCursor />
-        <FilmGrain />
         <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: `try{var q=new URLSearchParams(location.search);var f=q.get("intro")==="1"||q.get("intro")==="true";if(!f&&sessionStorage.getItem("introSeen")==="true")document.documentElement.classList.add("intro-seen")}catch(e){}`,
+          }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-        />
-        {children}
-        <AIChatBot />
+        <IntroGate>
+          <SmoothScroll />
+          <ScrollProgress />
+          <AmbientBackground />
+          <CustomCursor />
+          <FilmGrain />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+          />
+          {children}
+          <AIChatBot />
+        </IntroGate>
       </body>
     </html>
   );

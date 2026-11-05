@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useIntro } from "@/components/IntroGate";
 import {
   MessageSquare,
   X,
@@ -35,6 +36,7 @@ const STARTER_PROMPTS = [
 ];
 
 export function AIChatBot() {
+  const { phase } = useIntro();
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [input, setInput] = useState("");
@@ -244,6 +246,8 @@ export function AIChatBot() {
       );
     });
   };
+
+  if (phase === "intro") return null;
 
   return (
     <>

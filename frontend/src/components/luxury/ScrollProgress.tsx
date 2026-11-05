@@ -1,14 +1,18 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
+import { useIntro } from "@/components/IntroGate";
 
 export function ScrollProgress() {
+  const { phase } = useIntro();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
   });
+
+  if (phase === "intro") return null;
 
   return (
     <motion.div
