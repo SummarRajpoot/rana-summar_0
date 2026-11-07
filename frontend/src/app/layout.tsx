@@ -135,6 +135,19 @@ const personJsonLd = {
     "https://www.instagram.com/ranasummar_0/",
     "https://www.youtube.com/@ranasummar_0",
   ],
+  hasCredential: [
+    {
+      "@type": "EducationalOccupationalCredential",
+      name: "AMD Developer Hackathon: ACT III",
+      credentialCategory: "certificate",
+      recognizedBy: {
+        "@type": "Organization",
+        name: "lablab.ai (NativelyAI)",
+      },
+      dateCreated: "2026-10-18",
+      url: `${SITE_URL}/certificates/AMD_Developer_Hackathon__ACT_III-certificate.pdf`,
+    },
+  ],
 };
 
 export default function RootLayout({

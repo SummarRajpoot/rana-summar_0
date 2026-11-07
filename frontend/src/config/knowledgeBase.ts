@@ -87,17 +87,25 @@ He transitioned into AI development with strong discipline and practical problem
    - Role: Retail management, inventory control, customer relations, team supervision, problem solving, operational efficiency.
 
 # CERTIFICATIONS
-1. Star Badge Award — Certificate of Achievement:
+1. AMD Developer Hackathon: ACT III
+   - Issuer: lablab.ai (NativelyAI)
+   - Date: Oct 12 to 18, 2026
+   - Type: Certificate of Completion
+   - Description: Completed and submitted an AI/ML solution during AMD Developer Hackathon: ACT III, using AMD Developer Cloud, AMD ROCm, Claude, Groq and LangChain.
+   - Project: AI Factory Quality & Maintenance Agent (a multimodal defect detection and maintenance assistant)
+   - Credential ID: C9E2D94687796426BA9C35FADC5C9B3C2
+   - Links: Prototype: https://act-iii-hackathon-prototype.vercel.app/ | GitHub: https://github.com/SummarRajpoot/ACT-III-Hackathon-Prototype | LinkedIn: https://lnkd.in/p/dbAaeTni
+2. Star Badge Award — Certificate of Achievement:
    - Issuer: Chase Value (March 2023)
    - Detail: Awarded for extraordinary customer service, selling skills, and excellence.
-2. CS50x Puzzle Day 2026:
+3. CS50x Puzzle Day 2026:
    - Issuer: Harvard University (2026)
    - Detail: Problem-solving and collaborative algorithmic challenges.
-3. Introduction to Cybersecurity:
+4. Introduction to Cybersecurity:
    - Issuer: Cisco Networking Academy (01 Mar 2026)
-4. Networking Devices and Initial Configuration:
+5. Networking Devices and Initial Configuration:
    - Issuer: Cisco Networking Academy (09 Mar 2026)
-5. Agentic AI (Batch-1) Certificate:
+6. Agentic AI (Batch-1) Certificate:
    - Issuer: Saylani Welfare International Trust / Saylani IT Training (May 2026)
 
 # CONTACT & HIRE LINKS

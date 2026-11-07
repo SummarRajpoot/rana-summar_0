@@ -13,6 +13,7 @@ import { SkillsSection } from "@/components/SkillsSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { ProjectsSection } from "@/components/luxury/ProjectsSection";
 import { CertificatesSection } from "@/components/luxury/CertificatesSection";
+import { certificatesData } from "@/data/certificates";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { ContactSection } from "@/components/ContactSection";
 import { FooterSection } from "@/components/luxury/FooterSection";
@@ -30,6 +31,14 @@ const UpworkIcon = ({ className = "w-4 h-4 shrink-0" }: { className?: string }) 
 );
 
 export default function Home() {
+  const hackathonCert = certificatesData.find(
+    (c) => c.badge === "Hackathon" || c.id === "amd-developer-hackathon-act-iii"
+  );
+  const heroPillText =
+    hackathonCert?.result && hackathonCert.result.trim() !== ""
+      ? hackathonCert.result
+      : "AMD Developer Hackathon ACT III";
+
   return (
     <>
       <Navbar />
@@ -42,7 +51,16 @@ export default function Home() {
         >
           <HeroStagger className="w-full max-w-[1160px] mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-16">
             <HeroReveal className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
-              <TypewriterEyebrow text="FULL-STACK AI DEVELOPER" className="mb-4" />
+              <TypewriterEyebrow text="FULL-STACK AI DEVELOPER" className="mb-3" />
+
+              {/* Hackathon Achievement Pill */}
+              <a
+                href="#certificates"
+                className="group inline-flex items-center gap-2 px-3.5 py-1 mb-4 rounded-full border border-[#4FD1C5]/40 bg-[#16203A]/70 text-xs font-mono text-[#B5F5EC] hover:bg-[#16203A] hover:border-[#4FD1C5] hover:shadow-[0_0_20px_rgba(79,209,197,0.25)] transition-all cursor-pointer"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#4FD1C5] animate-pulse" />
+                <span>{heroPillText}</span>
+              </a>
 
               <h1 className="font-heading font-bold text-[clamp(2.75rem,7vw,5.5rem)] leading-[1.04] tracking-[-0.03em] text-[#F7F5F0] mb-6">
                 <span className="block overflow-hidden">
