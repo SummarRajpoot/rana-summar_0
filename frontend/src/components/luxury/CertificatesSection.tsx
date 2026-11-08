@@ -9,7 +9,6 @@ import { Counter } from "@/components/motion/Counter";
 import { Certificate, certificatesData } from "@/data/certificates";
 
 export type { Certificate };
-export { certificatesData };
 
 export function CertificatesSection() {
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
